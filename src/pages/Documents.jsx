@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Header from '../components/Header'
 
 const docs = [
   {
@@ -203,7 +202,7 @@ const docs = [
 function DocList({ onSelect }) {
   return (
     <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-gray-50">
-      <Header title="서류 미리보기" />
+      {/* 뒤로가기 버튼 누락 */}
       <div className="bg-white px-5 pt-5 pb-5 border-b border-gray-100">
         <div className="text-3xl mb-2">📄</div>
         <h1 className="text-xl font-bold text-gray-900">서류 미리보기</h1>
