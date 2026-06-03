@@ -77,7 +77,9 @@ export default function Home() {
   function handleLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('nickname')
-    // 가이드 스텝 초기화 누락
+    localStorage.removeItem('monthly_step')
+    localStorage.removeItem('jeonse_step')
+    localStorage.removeItem('sale_step')
     setNickname(null)
     setUrgentSchedule(null)
   }
