@@ -120,8 +120,19 @@ export default function Home() {
 
       {/* 서브 타이틀 */}
       <div className="px-5 pt-5 pb-4">
-        <h1 className="text-xl font-bold text-gray-900 leading-tight">거래 유형을 선택하세요</h1>
-        <p className="text-sm text-gray-400 mt-1">처음 집 구하는 분들을 위한 단계별 안내</p>
+        {nickname ? (
+          <>
+            <p className="text-sm text-gray-400">안녕하세요 👋</p>
+            <h1 className="text-xl font-bold text-gray-900 mt-0.5">
+              {nickname}님, 어떤 거래를 준비 중인가요?
+            </h1>
+          </>
+        ) : (
+          <>
+            <h1 className="text-xl font-bold text-gray-900 leading-tight">어떤 거래를 준비 중인가요?</h1>
+            <p className="text-sm text-gray-400 mt-1">단계별 가이드로 쉽게 시작해보세요</p>
+          </>
+        )}
       </div>
 
       {/* 임박 일정 배너 */}
@@ -152,42 +163,44 @@ export default function Home() {
 
       {/* 거래 유형 카드 */}
       <div className="px-4 space-y-3 flex-1">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide px-1 mb-1">거래 유형 선택</p>
         {types.map((t) => (
           <button
             key={t.path}
             onClick={() => navigate(t.path)}
-            className="w-full text-left rounded-xl border p-4 flex items-center gap-4 active:scale-[0.98] transition-transform"
+            className="w-full text-left rounded-2xl border p-5 flex items-center gap-4 active:scale-[0.98] transition-all shadow-sm"
             style={{ backgroundColor: t.bg, borderColor: t.borderColor }}
           >
             <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-              style={{ backgroundColor: t.color + '22' }}
+              className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0 shadow-sm"
+              style={{ backgroundColor: 'white' }}
             >
               {t.icon}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-bold text-base" style={{ color: t.textColor }}>{t.label}</span>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-bold text-[17px]" style={{ color: t.textColor }}>{t.label}</span>
                 {t.badge && (
                   <span
-                    className="text-xs px-2 py-0.5 rounded-full font-medium"
+                    className="text-[11px] px-2 py-0.5 rounded-full font-semibold"
                     style={{ backgroundColor: t.color, color: 'white' }}
                   >
                     {t.badge}
                   </span>
                 )}
               </div>
-              <p className="text-sm" style={{ color: t.textColor + 'CC' }}>{t.desc}</p>
-              <div className="mt-1.5 flex items-center gap-1">
-                <span className="text-xs font-medium" style={{ color: t.textColor }}>난이도</span>
+              <p className="text-sm" style={{ color: t.textColor + 'BB' }}>{t.desc}</p>
+              <div className="mt-2 flex items-center gap-1">
+                <span className="text-[11px] font-medium" style={{ color: t.textColor + '99' }}>난이도</span>
                 <span className="text-xs" style={{ color: t.color }}>{t.stars}</span>
-                <span className="text-xs text-gray-300">{t.starsGray}</span>
+                <span className="text-xs" style={{ color: t.borderColor }}>{t.starsGray}</span>
               </div>
             </div>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
-              <path d="M7 4L12 9L7 14" stroke={t.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: t.color + '20' }}>
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+                <path d="M7 4L12 9L7 14" stroke={t.color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
           </button>
         ))}
       </div>
