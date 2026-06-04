@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import BottomNav from '../components/BottomNav'
 import Spinner from '../components/Spinner'
 import Toast from '../components/Toast'
 import { getCheckedItems, toggleChecklistItem } from '../api/auth'
@@ -230,7 +231,7 @@ export default function Checklist() {
       </div>
 
       {/* 하단 진행 표시 */}
-      <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-3">
+      <div className="sticky bottom-16 bg-white border-t border-gray-100 px-4 py-3">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-semibold text-gray-700">{count} / {items.length} 완료</span>
           <div className="flex items-center gap-2">
@@ -257,6 +258,7 @@ export default function Checklist() {
           />
         </div>
       </div>
+      <BottomNav />
     </div>
   )
 }

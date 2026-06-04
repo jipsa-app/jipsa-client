@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getContracts } from '../api/contract'
+import BottomNav from '../components/BottomNav'
 
 const types = [
   {
@@ -94,7 +95,7 @@ export default function Home() {
   }
 
   return (
-    <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-white">
+    <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-white pb-16">
       {/* 헤더 */}
       <div className="px-5 pt-10 pb-6">
         <div className="flex items-start justify-between">
@@ -234,6 +235,7 @@ export default function Home() {
           </svg>
         </button>
       </div>
+      <BottomNav />
     </div>
   )
 }

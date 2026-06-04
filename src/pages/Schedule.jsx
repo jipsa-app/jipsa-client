@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import BottomNav from '../components/BottomNav'
 import Spinner from '../components/Spinner'
 import Toast from '../components/Toast'
 import { getContracts, createContract, updateContract, deleteContract } from '../api/contract'
@@ -279,7 +280,7 @@ export default function Schedule() {
       </div>
 
       {isLoggedIn && (
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-3">
+        <div className="sticky bottom-16 bg-white border-t border-gray-100 px-4 py-3">
           <button
             onClick={() => setShowForm(true)}
             className="w-full py-3.5 rounded-xl text-sm font-semibold text-white bg-[#185FA5]"
@@ -299,6 +300,7 @@ export default function Schedule() {
           onCancel={() => setEditing(null)}
         />
       )}
+      <BottomNav />
     </div>
   )
 }

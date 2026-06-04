@@ -8,6 +8,7 @@ import Checklist from './pages/Checklist'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Schedule from './pages/Schedule'
+import MyPage from './pages/MyPage'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/schedule" element={<Schedule />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from '../components/Header'
+import BottomNav from '../components/BottomNav'
 
 const docs = [
   {
@@ -235,6 +236,7 @@ function DocList({ onSelect }) {
           </button>
         ))}
       </div>
+      <BottomNav />
     </div>
   )
 }
