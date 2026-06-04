@@ -165,51 +165,61 @@ export default function Checklist() {
           </p>
         </div>
 
-        {/* 체크 아이템 - 하나의 카드 안에 리스트 */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          {items.map((item, idx) => {
-            const isChecked = !!checked[item.id]
-            return (
-              <div
-                key={item.id}
-                className={`px-4 py-4 transition-all ${idx !== 0 ? 'border-t border-gray-50' : ''}`}
-                style={{ backgroundColor: isChecked ? item.bg : 'white' }}
-              >
-                <div className="flex items-start gap-3">
-                  <button
-                    onClick={() => toggle(item.id)}
-                    className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center border-2 mt-0.5 transition-all"
-                    style={{
-                      borderColor: isChecked ? item.color : '#d1d5db',
-                      backgroundColor: isChecked ? item.color : 'white',
-                    }}
-                    aria-checked={isChecked}
-                  >
-                    {isChecked && (
-                      <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                        <path d="M1 5L4.5 8.5L11 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    )}
-                  </button>
-                  <div className="flex-1 min-w-0">
-                    <p className={`font-semibold text-sm ${isChecked ? 'line-through' : ''}`}
-                      style={{ color: isChecked ? item.color : '#111827' }}>
+        {/* 체크 아이템 */}
+        {items.map((item) => {
+          const isChecked = !!checked[item.id]
+          return (
+            <div
+              key={item.id}
+              className="rounded-xl border p-4 transition-all"
+              style={{
+                backgroundColor: isChecked ? item.bg : 'white',
+                borderColor: isChecked ? item.border : '#e5e7eb',
+              }}
+            >
+              <div className="flex items-start gap-3">
+                <button
+                  onClick={() => toggle(item.id)}
+                  className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center border-2 mt-0.5 transition-all"
+                  style={{
+                    borderColor: isChecked ? item.color : '#d1d5db',
+                    backgroundColor: isChecked ? item.color : 'white',
+                  }}
+                  aria-checked={isChecked}
+                >
+                  {isChecked && (
+                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                      <path d="M1 5L4.5 8.5L11 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </button>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span>{item.icon}</span>
+                    <span
+                      className={`font-semibold text-sm ${isChecked ? 'line-through' : ''}`}
+                      style={{ color: isChecked ? item.color : '#111827' }}
+                    >
                       {item.title}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
-                    {item.url && !isChecked && (
-                      <a href={item.url} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-medium mt-1.5"
-                        style={{ color: item.color }}>
-                        → {item.urlLabel}
-                      </a>
-                    )}
+                    </span>
                   </div>
+                  <p className="text-xs text-gray-500 pl-6">{item.desc}</p>
+                  {item.url && !isChecked && (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-medium mt-2 ml-6"
+                      style={{ color: item.color }}
+                    >
+                      → {item.urlLabel}
+                    </a>
+                  )}
                 </div>
               </div>
-            )
-          })}
-        </div>
+            </div>
+          )
+        })}
 
         {/* 전체 완료 메시지 */}
         {allDone && (

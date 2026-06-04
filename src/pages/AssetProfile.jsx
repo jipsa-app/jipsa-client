@@ -154,7 +154,18 @@ export default function AssetProfile() {
             ].map(t => (
               <button
                 key={t.key}
-                onClick={() => { setType(t.key); setResult(null) }}
+                onClick={() => {
+                  const newType = t.key
+                  setType(newType)
+                  // 값이 모두 있으면 자동 재계산
+                  if (cash && income && targetPrice) {
+                    const r = getRecommendations({ type: newType, cash: Number(cash), targetPrice: Number(targetPrice), income: Number(income) })
+                    setResult(r)
+                    localStorage.setItem('asset_profile', JSON.stringify({ cash, income, type: newType, targetPrice, result: r }))
+                  } else {
+                    setResult(null)
+                  }
+                }}
                 className="flex-1 py-3 rounded-xl text-sm font-semibold border transition-all"
                 style={{
                   backgroundColor: type === t.key ? t.bg : 'white',
