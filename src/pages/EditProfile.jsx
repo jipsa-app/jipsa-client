@@ -124,7 +124,7 @@ export default function EditProfile() {
         </Section>
 
         {/* 회원 탈퇴 */}
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-end pt-2 pb-4 px-1">
           <button
             onClick={() => setShowWithdraw(true)}
             className="text-xs text-gray-300 underline underline-offset-2"
