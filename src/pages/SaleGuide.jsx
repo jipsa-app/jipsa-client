@@ -350,15 +350,8 @@ export default function SaleGuide() {
 
     7: (
       <div className="space-y-3">
-        <div className="flex gap-2 items-start bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3">
-          <span className="text-base flex-shrink-0">⚠️</span>
-          <p className="text-sm text-[#791F1F] leading-relaxed">
-            전입신고는 이사 당일 해도 <b>대항력은 다음날 0시</b>부터 생겨요. 전월세 신고는 계약 후 30일 이내 미신고 시 과태료 최대 30만원 (허위신고 100만원)이 부과돼요.
-          </p>
-        </div>
         <CompleteCard items={[
           { title: '전입신고', desc: '주민센터 or 정부24 · 이사 당일' },
-          { title: '확정일자', desc: '주민센터 · 600원 · 전입신고와 동시에' },
           { title: '부동산 거래 신고', desc: '계약 후 30일 이내 · 공인중개사가 대행' },
           { title: '자동차 주민등록지 변경', desc: '관할 구청 또는 차량등록사업소' },
         ]} />

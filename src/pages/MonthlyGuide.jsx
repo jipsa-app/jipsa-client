@@ -381,7 +381,7 @@ export default function MonthlyGuide() {
         </div>
 
         <SpecialCard items={[
-          '잔금일 전까지 임대인은 근저당 설정 및 소유권 이전 금지',
+          '입주일 전까지 임대인은 근저당 추가 설정 금지',
           '입주 전 도배·장판 교체 임대인 부담',
           '퇴실 시 원상복구 범위 및 임대인 부담 명시',
         ]} />
