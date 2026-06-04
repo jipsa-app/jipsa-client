@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Toast from '../components/Toast'
-import { updateNickname, updatePassword, withdraw, checkNickname } from '../api/auth'
+import { updateNickname, updatePassword, withdraw, checkNickname, updateAge, getMe } from '../api/auth'
 
 export default function EditProfile() {
   const navigate = useNavigate()
@@ -16,8 +16,16 @@ export default function EditProfile() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [toast, setToast] = useState(null)
   const [showWithdraw, setShowWithdraw] = useState(false)
+  const [age, setAge] = useState('')
   const [loadingNick, setLoadingNick] = useState(false)
   const [loadingPw, setLoadingPw] = useState(false)
+  const [loadingAge, setLoadingAge] = useState(false)
+
+  useEffect(() => {
+    getMe().then(res => {
+      if (res.data.age) setAge(String(res.data.age))
+    }).catch(() => {})
+  }, [])
 
   const showToast = (msg, type = 'error') => setToast({ msg, type })
 
@@ -38,6 +46,20 @@ export default function EditProfile() {
       setNicknameStatus(res.data ? 'ok' : 'dup')
     } catch {
       setNicknameStatus(null)
+    }
+  }
+
+  async function handleAge() {
+    const a = Number(age)
+    if (!a || a < 1 || a > 100) return showToast('올바른 나이를 입력해주세요.')
+    setLoadingAge(true)
+    try {
+      await updateAge(a)
+      showToast('나이가 저장되었어요! ✅', 'success')
+    } catch (e) {
+      showToast(e.response?.data?.message || '저장에 실패했어요.')
+    } finally {
+      setLoadingAge(false)
     }
   }
 
@@ -99,6 +121,35 @@ export default function EditProfile() {
             <div className="w-full border border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-400 bg-gray-50">
               {email || '이메일 정보 없음'}
             </div>
+          </div>
+        </Section>
+
+        {/* 나이 */}
+        <Section title="나이">
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-gray-500">나이</label>
+              <div className="relative">
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  value={age}
+                  onChange={e => setAge(e.target.value)}
+                  placeholder="예) 28"
+                  min={1} max={100}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#185FA5] pr-10"
+                />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400">세</span>
+              </div>
+              <p className="text-xs text-gray-400">맞춤 대출 추천 시 청년 대출 조건 자동 판단에 사용돼요</p>
+            </div>
+            <button
+              onClick={handleAge}
+              disabled={loadingAge || !age}
+              className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#185FA5] disabled:opacity-40"
+            >
+              {loadingAge ? '저장 중...' : '나이 저장'}
+            </button>
           </div>
         </Section>
 

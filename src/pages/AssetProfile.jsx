@@ -5,7 +5,7 @@ import BottomNav from '../components/BottomNav'
 import { getMe, updateAssetProfileDB } from '../api/auth'
 
 // 대출 상품 추천 로직
-function getRecommendations({ type, cash, targetPrice, income }) {
+function getRecommendations({ type, cash, targetPrice, income, age }) {
   const need = targetPrice - cash  // 필요 대출액 (만원)
   if (need <= 0) return { need: 0, monthly: 0, dsr: 0, products: [], surplus: cash - targetPrice }
 
@@ -30,16 +30,21 @@ function getRecommendations({ type, cash, targetPrice, income }) {
       })
     }
 
-    // 청년 전용 전세대출 (만 34세 이하 가정)
+    // 청년 전용 전세대출 (만 34세 이하)
+    const isYoung = age ? age <= 34 : null // 나이 미입력이면 null
+    const youngEligible = isYoung && income <= 5000 && need <= 30000
+    const youngTip = isYoung === null
+      ? '⚠️ 회원정보에 나이를 입력하면 자동 판단해드려요!'
+      : youngEligible ? '✅ 조건 충족!' : age > 34 ? '❌ 만 34세 초과 — 해당 없음' : '⚠️ 소득 조건 확인 필요'
     results.push({
       name: '청년 전용 전세대출',
       color: '#639922',
       bg: '#EAF3DE',
-      eligible: income <= 5000 && need <= 30000,
+      eligible: !!youngEligible,
       limit: 30000,
       rate: 2.3,
-      desc: '만 34세 이하 · 연소득 5천만원 이하 · 최대 3억',
-      tip: income <= 5000 && need <= 30000 ? '✅ 조건 충족!' : '⚠️ 소득/나이 조건 확인 필요',
+      desc: `만 34세 이하 · 연소득 5천만원 이하 · 최대 3억${age ? ` · 현재 ${age}세` : ''}`,
+      tip: youngTip,
       url: 'https://nhuf.molit.go.kr/FP/FP05/FP0503/FP05030201.jsp',
       urlLabel: '청년 전세대출 신청',
     })
@@ -127,11 +132,13 @@ export default function AssetProfile() {
   const [type, setType] = useState(saved.type || 'jeonse')
   const [targetPrice, setTargetPrice] = useState(saved.targetPrice || '')
   const [result, setResult] = useState(saved.result || null)
+  const [memberAge, setMemberAge] = useState(null) // DB에서 불러온 나이
 
-  // 로그인 시 DB에서 자산 정보 불러오기
+  // 로그인 시 DB에서 자산 정보 + 나이 불러오기
   useEffect(() => {
     if (!isLoggedIn) return
     getMe().then(res => {
+      if (res.data.age) setMemberAge(res.data.age)
       if (res.data.assetProfile) {
         try {
           const data = JSON.parse(res.data.assetProfile)
@@ -140,7 +147,7 @@ export default function AssetProfile() {
           setType(data.type || 'jeonse')
           setTargetPrice(data.targetPrice || '')
           if (data.cash && data.income && data.targetPrice) {
-            const r = getRecommendations({ type: data.type || 'jeonse', cash: Number(data.cash), targetPrice: Number(data.targetPrice), income: Number(data.income) })
+            const r = getRecommendations({ type: data.type || 'jeonse', cash: Number(data.cash), targetPrice: Number(data.targetPrice), income: Number(data.income), age: res.data.age })
             setResult(r)
           }
         } catch {}
@@ -153,7 +160,7 @@ export default function AssetProfile() {
     const i = Number(income)
     const t = Number(targetPrice)
     if (!c || !i || !t) return
-    const r = getRecommendations({ type, cash: c, targetPrice: t, income: i })
+    const r = getRecommendations({ type, cash: c, targetPrice: t, income: i, age: memberAge })
     setResult(r)
     const profileData = { cash, income, type, targetPrice }
     localStorage.setItem('asset_profile', JSON.stringify({ ...profileData, result: r }))
@@ -183,7 +190,7 @@ export default function AssetProfile() {
                   setType(newType)
                   // 값이 모두 있으면 자동 재계산
                   if (cash && income && targetPrice) {
-                    const r = getRecommendations({ type: newType, cash: Number(cash), targetPrice: Number(targetPrice), income: Number(income) })
+                    const r = getRecommendations({ type: newType, cash: Number(cash), targetPrice: Number(targetPrice), income: Number(income), age: memberAge })
                     setResult(r)
                     localStorage.setItem('asset_profile', JSON.stringify({ cash, income, type: newType, targetPrice, result: r }))
                   } else {
@@ -232,6 +239,21 @@ export default function AssetProfile() {
             )}
           </div>
         </div>
+
+        {isLoggedIn && !memberAge && (
+          <div className="bg-[#FAEEDA] border border-[#E8C88A] rounded-xl px-4 py-3 flex items-center gap-2">
+            <span className="text-sm">💡</span>
+            <p className="text-xs text-[#633806] flex-1">
+              <span className="font-semibold">나이</span>를 입력하면 청년 대출 조건을 자동으로 판단해드려요!
+            </p>
+            <button
+              onClick={() => navigate('/mypage/edit')}
+              className="text-xs font-semibold text-[#BA7517] flex-shrink-0"
+            >
+              입력하기 →
+            </button>
+          </div>
+        )}
 
         <button
           onClick={handleAnalyze}

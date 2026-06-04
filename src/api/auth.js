@@ -34,6 +34,10 @@ export function updateAssetProfileDB(assetProfile) {
   return api.put('/api/member/asset', { assetProfile: JSON.stringify(assetProfile) })
 }
 
+export function updateAge(age) {
+  return api.put('/api/member/age', { age })
+}
+
 export function updateNickname(nickname) {
   return api.put('/api/auth/nickname', { nickname })
 }
