@@ -212,6 +212,7 @@ export default function Schedule() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState(null)
+  const [deleteTarget, setDeleteTarget] = useState(null)
   const [toast, setToast] = useState(null)
   const isLoggedIn = !!localStorage.getItem('token')
 
@@ -246,13 +247,15 @@ export default function Schedule() {
     }
   }
 
-  async function handleDelete(id) {
-    if (!window.confirm('이 일정을 삭제할까요?')) return
+  async function handleDelete() {
+    if (!deleteTarget) return
     try {
-      await deleteContract(id)
-      setContracts(cs => cs.filter(c => c.id !== id))
+      await deleteContract(deleteTarget)
+      setContracts(cs => cs.filter(c => c.id !== deleteTarget))
+      setDeleteTarget(null)
     } catch {
       setToast('삭제에 실패했어요. 다시 시도해주세요')
+      setDeleteTarget(null)
     }
   }
 
@@ -298,7 +301,7 @@ export default function Schedule() {
             key={c.id}
             contract={c}
             onEdit={() => setEditing(c)}
-            onDelete={() => handleDelete(c.id)}
+            onDelete={() => setDeleteTarget(c.id)}
           />
         ))}
       </div>
@@ -324,6 +327,34 @@ export default function Schedule() {
           onCancel={() => setEditing(null)}
         />
       )}
+
+      {/* 삭제 확인 모달 */}
+      {deleteTarget && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-6">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm">
+            <div className="text-center mb-5">
+              <div className="text-4xl mb-3">🗑️</div>
+              <p className="font-bold text-gray-900">일정을 삭제할까요?</p>
+              <p className="text-sm text-gray-400 mt-2">삭제한 일정은 복구할 수 없어요.</p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="flex-1 py-3 rounded-xl text-sm font-semibold border border-gray-200 text-gray-600"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex-1 py-3 rounded-xl text-sm font-semibold text-white bg-red-500"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <BottomNav />
     </div>
   )

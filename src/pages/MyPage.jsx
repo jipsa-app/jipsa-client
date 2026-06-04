@@ -33,18 +33,16 @@ export default function MyPage() {
               {nickname?.charAt(0) || '👤'}
             </div>
             <div className="flex-1">
-              <>
-                <p className="font-bold text-gray-900 text-lg">{nickname}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <p className="text-sm text-gray-400">집사 멤버</p>
-                  <button
-                    onClick={() => navigate('/mypage/edit')}
-                    className="text-[11px] text-gray-400 border border-gray-200 rounded-full px-2 py-0.5"
-                  >
-                    회원정보 수정
-                  </button>
-                </div>
-              </>
+              <p className="font-bold text-gray-900 text-lg">{nickname}</p>
+              <div className="flex items-center gap-2 mt-1">
+                <p className="text-sm text-gray-400">집사 멤버</p>
+                <button
+                  onClick={() => navigate('/mypage/edit')}
+                  className="text-[11px] text-gray-400 border border-gray-200 rounded-full px-2 py-0.5"
+                >
+                  회원정보 수정
+                </button>
+              </div>
             </div>
           </div>
         ) : (

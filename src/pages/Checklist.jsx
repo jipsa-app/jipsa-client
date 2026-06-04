@@ -132,7 +132,7 @@ export default function Checklist() {
 
   if (loading) return (
     <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-gray-50">
-      <Header title="전세사기 예방 체크리스트" badge="6개 항목" badgeStyle="bg-[#FCEBEB] text-[#E24B4A]" noBack />
+      <Header title="전세사기 예방 체크리스트" badge={`${items.length}개 항목`} badgeStyle="bg-[#FCEBEB] text-[#E24B4A]" noBack />
       <Spinner color="#E24B4A" />
     </div>
   )
