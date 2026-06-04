@@ -140,7 +140,7 @@ export default function Checklist() {
       />
       {toast && <Toast message={toast} onClose={() => setToast(null)} />}
 
-      <div className="px-4 py-5 flex-1 overflow-y-auto space-y-3 pb-32">
+      <div className="px-4 py-5 flex-1 overflow-y-auto space-y-3 pb-24">
         {/* 비로그인 안내 배너 */}
         {!isLoggedIn && (
           <div className="bg-[#E6F1FB] border border-[#A8C8E8] rounded-xl px-4 py-3 flex items-center justify-between gap-2">
