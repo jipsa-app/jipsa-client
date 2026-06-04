@@ -8,11 +8,11 @@ export default function BottomNav() {
 
   const tabs = [
     {
-      key: 'documents',
-      label: '서류',
-      icon: DocumentIcon,
-      active: isActive('/documents'),
-      onClick: () => navigate('/documents'),
+      key: 'assets',
+      label: '맞춤추천',
+      icon: LoanIcon,
+      active: isActive('/mypage/assets'),
+      onClick: () => navigate('/mypage/assets'),
     },
     {
       key: 'checklist',
@@ -87,13 +87,13 @@ function HomeIcon({ home }) {
   )
 }
 
-function DocumentIcon({ active }) {
+function LoanIcon({ active }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"
+      <circle cx="12" cy="12" r="9"
         stroke={active ? '#185FA5' : '#9ca3af'} strokeWidth="1.8"
-        fill={active ? '#E6F1FB' : 'none'} strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M14 2v6h6M9 13h6M9 17h4"
+        fill={active ? '#E6F1FB' : 'none'}/>
+      <path d="M12 7v10M9 9.5C9 8.1 10.3 7 12 7s3 1.1 3 2.5-1.3 2.5-3 2.5-3 1.1-3 2.5S10.3 17 12 17s3-1.1 3-2.5"
         stroke={active ? '#185FA5' : '#9ca3af'} strokeWidth="1.8" strokeLinecap="round"/>
     </svg>
   )
