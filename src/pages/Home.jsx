@@ -47,7 +47,10 @@ const types = [
 export default function Home() {
   const navigate = useNavigate()
   const [nickname, setNickname] = useState(null)
-  const [urgentSchedule, setUrgentSchedule] = useState(null)
+  const [urgentSchedule, setUrgentSchedule] = useState(() => {
+    const cached = localStorage.getItem('urgent_schedule')
+    return cached ? JSON.parse(cached) : null
+  })
 
   useEffect(() => {
     setNickname(localStorage.getItem('nickname'))
@@ -70,6 +73,11 @@ export default function Home() {
           })
         })
         setUrgentSchedule(closest)
+        if (closest) {
+          localStorage.setItem('urgent_schedule', JSON.stringify(closest))
+        } else {
+          localStorage.removeItem('urgent_schedule')
+        }
       }).catch(() => {})
     }
   }, [])
@@ -80,6 +88,7 @@ export default function Home() {
     localStorage.removeItem('monthly_step')
     localStorage.removeItem('jeonse_step')
     localStorage.removeItem('sale_step')
+    localStorage.removeItem('urgent_schedule')
     setNickname(null)
     setUrgentSchedule(null)
   }
