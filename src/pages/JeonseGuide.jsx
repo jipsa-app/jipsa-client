@@ -40,8 +40,10 @@ function LoginGate({ onLogin, color }) {
   )
 }
 
-function StepLayout({ step, total, title, children, onPrev, onNext, loginBanner, isLoggedIn, onLogin }) {
+function StepLayout({ step, total, title, children, onPrev, onNext, onReset, checks, stepItems, loginBanner, isLoggedIn, onLogin }) {
   const locked = step >= 3 && !isLoggedIn
+  const checkedCount = (stepItems || []).filter(k => !!checks?.[k]).length
+  const totalCount = (stepItems || []).length
 
   return (
     <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-gray-50">
@@ -97,7 +99,16 @@ function StepLayout({ step, total, title, children, onPrev, onNext, loginBanner,
             {children}
           </div>
       }
-      <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-3 flex gap-2">
+      <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 pt-2 pb-3">
+        {totalCount > 0 && (
+          <div className="flex items-center justify-between mb-2 px-1">
+            <span className="text-xs text-gray-400">{checkedCount}/{totalCount} 완료</span>
+            {onReset && checkedCount > 0 && (
+              <button onClick={onReset} className="text-xs text-gray-300 underline underline-offset-2">초기화</button>
+            )}
+          </div>
+        )}
+        <div className="flex gap-2">
         <button
           onClick={onPrev}
           disabled={step === 1}
@@ -113,6 +124,7 @@ function StepLayout({ step, total, title, children, onPrev, onNext, loginBanner,
         >
           {step === total ? '완료 🎉' : '다음 단계'}
         </button>
+        </div>
       </div>
     </div>
   )
@@ -171,9 +183,20 @@ function CompleteCard({ items }) {
 
 const PREFIX = 'jeonse_'
 
+const STEP_ITEMS = {
+  1: ['1a', '1b'],
+  2: ['2a', '2b', '2c', '2d', '2e', '2f', '2g'],
+  3: ['3a', '3b', '3c'],
+  4: ['4a', '4b'],
+  5: [],
+  6: [],
+}
+
 export default function JeonseGuide() {
   const navigate = useNavigate()
   const [step, setStep] = useState(() => Number(localStorage.getItem('jeonse_step')) || 1)
+  const [showWarning, setShowWarning] = useState(false)
+  const [pendingNext, setPendingNext] = useState(null)
   const [checks, setChecks] = useState({})
   const [priceInput, setPriceInput] = useState({ senior: '', mine: '', market: '' })
   const [showConversion, setShowConversion] = useState(false)
@@ -214,6 +237,31 @@ export default function JeonseGuide() {
   const toggle = async (key) => {
     if (isLoggedIn) await toggleChecklistItem(PREFIX + key).catch(() => {})
     setChecks((c) => ({ ...c, [key]: !c[key] }))
+  }
+
+  const resetStep = async () => {
+    const keys = STEP_ITEMS[step] || []
+    if (isLoggedIn) await Promise.all(keys.filter(k => checks[k]).map(k => toggleChecklistItem(PREFIX + k).catch(() => {})))
+    setChecks(c => { const next = { ...c }; keys.forEach(k => { next[k] = false }); return next })
+  }
+
+  const handleNext = () => {
+    const keys = STEP_ITEMS[step] || []
+    const unchecked = keys.filter(k => !checks[k])
+    if (unchecked.length > 0) {
+      setPendingNext(() => () => {
+        const n = Math.min(TOTAL, step + 1)
+        setStep(n)
+        localStorage.setItem('jeonse_step', n)
+        if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {})
+      })
+      setShowWarning(true)
+    } else {
+      const n = Math.min(TOTAL, step + 1)
+      setStep(n)
+      localStorage.setItem('jeonse_step', n)
+      if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {})
+    }
   }
 
   const senior = Number(priceInput.senior) || 0
@@ -514,17 +562,46 @@ export default function JeonseGuide() {
   }
 
   return (
-    <StepLayout
-      step={step}
-      total={TOTAL}
-      title={stepTitles[step - 1]}
-      onPrev={() => setStep((s) => { const n = Math.max(1, s - 1); localStorage.setItem('jeonse_step', n); if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {}); return n })}
-      onNext={() => setStep((s) => { const n = Math.min(TOTAL, s + 1); localStorage.setItem('jeonse_step', n); if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {}); return n })}
-      loginBanner={loginBanner}
-      isLoggedIn={isLoggedIn}
-      onLogin={() => navigate('/login')}
-    >
-      {content[step]}
-    </StepLayout>
+    <>
+      <StepLayout
+        step={step}
+        total={TOTAL}
+        title={stepTitles[step - 1]}
+        onPrev={() => { const n = Math.max(1, step - 1); setStep(n); localStorage.setItem('jeonse_step', n); if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {}) }}
+        onNext={handleNext}
+        onReset={STEP_ITEMS[step]?.length > 0 ? resetStep : null}
+        checks={checks}
+        stepItems={STEP_ITEMS[step] || []}
+        loginBanner={loginBanner}
+        isLoggedIn={isLoggedIn}
+        onLogin={() => navigate('/login')}
+      >
+        {content[step]}
+      </StepLayout>
+
+      {showWarning && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-6">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm">
+            <div className="text-center mb-5">
+              <div className="text-4xl mb-3">⚠️</div>
+              <p className="font-bold text-gray-900">미완료 항목이 있어요</p>
+              <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                아직 체크하지 않은 항목이 있어요.<br/>그래도 다음 단계로 넘어갈까요?
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setShowWarning(false)}
+                className="flex-1 py-3 rounded-xl text-sm font-semibold border border-gray-200 text-gray-600">
+                돌아가기
+              </button>
+              <button onClick={() => { setShowWarning(false); pendingNext && pendingNext() }}
+                className="flex-1 py-3 rounded-xl text-sm font-semibold text-white bg-[#185FA5]">
+                계속 진행
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
