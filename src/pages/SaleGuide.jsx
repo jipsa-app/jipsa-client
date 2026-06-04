@@ -200,10 +200,10 @@ export default function SaleGuide() {
         <div className="rounded-xl border p-4 space-y-2" style={{ backgroundColor: BG, borderColor: BORDER }}>
           <div className="flex items-center gap-2">
             <span>📌</span>
-            <span className="font-semibold text-sm" style={{ color: TEXT }}>2026년 대출 규제</span>
+            <span className="font-semibold text-sm" style={{ color: TEXT }}>2025년 7월~ 스트레스 DSR 3단계 시행</span>
           </div>
           <p className="text-sm leading-relaxed" style={{ color: TEXT + 'CC' }}>
-            스트레스 DSR 2단계 적용 · 투기과열지구 LTV 40~50%. 사전 은행 상담 필수.
+            전 금융권 모든 가계대출에 스트레스 금리 <b>1.5%</b> 가산 적용. 연소득 1억 기준 대출 한도 약 <b>1억 2,000만원 감소</b>. 투기과열지구 LTV 40~50%. 사전 은행 상담 필수.
           </p>
         </div>
 
