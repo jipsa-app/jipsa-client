@@ -247,13 +247,19 @@ export default function JeonseGuide() {
       <div className="space-y-3">
         <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-1">
           <CheckItem checked={!!checks['2a']} onChange={() => toggle('2a')} color={COLOR}>
-            곰팡이·냄새·채광·방음 직접 확인 (오전·오후 각 1회 권장)
+            채광·통풍 확인 (남향 & 맞통풍 여부)
           </CheckItem>
           <CheckItem checked={!!checks['2b']} onChange={() => toggle('2b')} color={COLOR}>
-            관리비 항목·금액 확인 (인터넷·주차·청소 포함 여부)
+            곰팡이 확인 (벽 모서리·화장실·창문 주변)
           </CheckItem>
           <CheckItem checked={!!checks['2c']} onChange={() => toggle('2c')} color={COLOR}>
-            주변 교통·편의시설 확인
+            수압·온수 확인 (뜨거운 물 틀어보기)
+          </CheckItem>
+          <CheckItem checked={!!checks['2d']} onChange={() => toggle('2d')} color={COLOR}>
+            난방 방식 확인 (개별난방 권장)
+          </CheckItem>
+          <CheckItem checked={!!checks['2e']} onChange={() => toggle('2e')} color={COLOR}>
+            관리비 항목·금액 확인 (인터넷·주차·청소 포함 여부)
           </CheckItem>
         </div>
         <WarningBanner>
@@ -318,14 +324,24 @@ export default function JeonseGuide() {
 
         <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-1">
           <CheckItem checked={!!checks['3a']} onChange={() => toggle('3a')} color={COLOR}>
-            임대인 세금 체납 여부 확인 (임사·임차 앱)
+            임대인 세금체납·악성임대인 여부 조회 (안심전세 앱)
           </CheckItem>
           <CheckItem checked={!!checks['3b']} onChange={() => toggle('3b')} color={COLOR}>
-            다가구 임대인 등록 여부 및 HUG 보증 가입 금지 이력 확인
+            다가구주택 — 선순위 세입자 총 보증금 합산 확인
+          </CheckItem>
+          <CheckItem checked={!!checks['3c']} onChange={() => toggle('3c')} color={COLOR}>
+            HUG 전세보증보험 가입 가능 여부 사전 확인
           </CheckItem>
         </div>
 
-        <LinkRow href="https://www.khug.or.kr">임사·임차 앱 (HUG 임대인 이력 조회)</LinkRow>
+        <LinkRow href="https://www.khug.or.kr/jeonse/web/s01/s010102.jsp">안심전세 앱 — 임대인 세금체납·악성이력 조회</LinkRow>
+
+        <div className="bg-[#E6F1FB] border border-[#A8C8E8] rounded-xl p-4">
+          <p className="text-xs font-bold text-[#0C447C] mb-2">💡 가계약 주의사항</p>
+          <p className="text-sm text-[#0C447C]/80 leading-relaxed">
+            가계약금(10~50만원)은 본계약 포기 시 돌려받기 어려워요. 반드시 등기부등본·깡통전세 계산 후 진행하세요!
+          </p>
+        </div>
       </div>
     ),
 
@@ -366,6 +382,13 @@ export default function JeonseGuide() {
           잔금 당일 — 이체 전에 등기부등본을 재발급해서 신규 근저당이 없는지 확인하세요!
         </WarningBanner>
 
+        <div className="flex gap-2 items-start bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3">
+          <span className="text-base flex-shrink-0">⚠️</span>
+          <p className="text-sm text-[#791F1F] leading-relaxed">
+            전입신고는 이사 당일 해도 <b>대항력은 다음날 0시</b>부터 생겨요. 이 틈에 집주인이 근저당을 설정하는 경우가 있으니 계약서 특약에 "전입신고일 다음날까지 등기 현 상태 유지" 반드시 명시하세요!
+          </p>
+        </div>
+
         <CompleteCard items={[
           { title: '등기부등본 재확인', desc: '잔금 이체 직전 최종 확인 (온라인 가능)' },
           { title: '잔금 이체', desc: '임대인 본인 명의 계좌 · 이체확인증 보관' },
@@ -378,7 +401,7 @@ export default function JeonseGuide() {
             {[
               { title: '전입신고', desc: '주민센터 or 정부24 · 무료' },
               { title: '확정일자', desc: '주민센터 · 600원' },
-              { title: '전세보험 신고', desc: '계약 후 30일 이내 · 미신고 과태료 100만원' },
+              { title: '전월세 신고', desc: '계약 후 30일 이내 · 미신고 과태료 최대 30만원 (허위신고 100만원)' },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-3 text-sm">
                 <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ backgroundColor: COLOR }}>

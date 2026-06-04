@@ -283,18 +283,30 @@ export default function MonthlyGuide() {
       <div className="space-y-3">
         <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-1">
           <CheckItem checked={!!checks['2a']} onChange={() => toggle('2a')} color={COLOR}>
-            곰팡이·냄새·채광·방음 직접 확인 (여러 시간대 방문 권장)
+            채광·통풍 확인 (남향 & 맞통풍 여부)
           </CheckItem>
           <CheckItem checked={!!checks['2b']} onChange={() => toggle('2b')} color={COLOR}>
-            관리비 항목·금액 확인 (인터넷·주차·청소 포함 여부)
+            곰팡이 확인 (벽 모서리·화장실·창문 주변)
           </CheckItem>
           <CheckItem checked={!!checks['2c']} onChange={() => toggle('2c')} color={COLOR}>
-            주변 교통·편의시설 확인 (도보 5분 내 마트·약국 등)
+            수압·온수 확인 (뜨거운 물 틀어보기)
+          </CheckItem>
+          <CheckItem checked={!!checks['2d']} onChange={() => toggle('2d')} color={COLOR}>
+            관리비 항목 확인 (인터넷·주차·청소 포함 여부)
+          </CheckItem>
+          <CheckItem checked={!!checks['2e']} onChange={() => toggle('2e')} color={COLOR}>
+            난방 방식 확인 (개별난방 권장)
           </CheckItem>
         </div>
 
+        <InfoCard color="#BA7517" bg="#FAEEDA" border="#E8C88A" icon="🌡️" title="난방 방식 비교">
+          <b>개별난방</b> — 내가 직접 조절, 가장 권장<br/>
+          <b>중앙난방</b> — 온도 조절 제한적<br/>
+          <b>지역난방</b> — 비용 저렴(약 30%), 조절 불가
+        </InfoCard>
+
         <WarningBanner>
-          건물 주변 공실이 많으면 임대 수요가 낮은 지역일 수 있어요. 퇴실 시 다음 세입자 구하기 어려울 수 있습니다.
+          마음에 들어도 티 내지 말고, 주변 시세보다 비싸다면 "바로 계약하면 조정 가능한가요?" 로 네고 시도해보세요!
         </WarningBanner>
       </div>
     ),
@@ -333,9 +345,20 @@ export default function MonthlyGuide() {
             임대인 신분증과 등기부등본 이름 일치 확인
           </CheckItem>
           <CheckItem checked={!!checks['3b']} onChange={() => toggle('3b')} color={COLOR}>
+            임대인 세금체납·악성임대인 여부 조회 (안심전세 앱)
+          </CheckItem>
+          <CheckItem checked={!!checks['3c']} onChange={() => toggle('3c')} color={COLOR}>
             공인중개사 등록 여부 조회 (국가공간정보포털)
           </CheckItem>
         </div>
+
+        <LinkRow href="https://www.khug.or.kr/jeonse/web/s01/s010102.jsp">안심전세 앱 — 임대인 세금체납·악성이력 조회</LinkRow>
+        <LinkRow href="https://www.onnara.go.kr">국가공간정보포털 — 공인중개사 등록 조회</LinkRow>
+
+        <InfoCard color="#BA7517" bg="#FAEEDA" border="#E8C88A" icon="⚠️" title="가계약 주의사항">
+          가계약금(10~50만원)은 본계약 포기 시 돌려받기 어려워요.<br/>
+          반드시 등기부등본·시세 확인 후 가계약 진행하세요!
+        </InfoCard>
       </div>
     ),
 
@@ -358,9 +381,9 @@ export default function MonthlyGuide() {
         </div>
 
         <SpecialCard items={[
-          '입주 전 배·수관 교체 (세입자 부담 금지)',
-          '퇴실 시 원상복구 임대인 부담 명시',
-          '계약 기간 중 보증금 인상 금지',
+          '잔금일 전까지 임대인은 근저당 설정 및 소유권 이전 금지',
+          '입주 전 도배·장판 교체 임대인 부담',
+          '퇴실 시 원상복구 범위 및 임대인 부담 명시',
         ]} />
       </div>
     ),
@@ -374,10 +397,18 @@ export default function MonthlyGuide() {
           </p>
         </div>
 
+        <div className="flex gap-2 items-start bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3">
+          <span className="text-base flex-shrink-0">⚠️</span>
+          <p className="text-sm text-[#791F1F] leading-relaxed">
+            전입신고는 이사 당일 해도 <b>대항력은 다음날 0시</b>부터 생겨요. 이 틈에 집주인이 근저당을 설정하는 경우가 있어요. 특약에 "전입신고일 다음날까지 등기 현 상태 유지" 명시하세요!
+          </p>
+        </div>
+
         <CompleteCard items={[
           { title: '전입신고', desc: '주민센터 or 정부24 · 무료 · 이사 당일 처리' },
           { title: '확정일자', desc: '주민센터 · 600원 · 전입신고 시 함께 신청' },
-          { title: '전세보험 신고', desc: '계약 후 30일 이내 · 미신고 시 과태료 100만원' },
+          { title: '전월세 신고', desc: '계약 후 30일 이내 · 미신고 시 과태료 최대 30만원 (허위신고 100만원)' },
+          { title: '자동차 주소 변경', desc: '관할 구청 또는 차량등록사업소' },
         ]} />
 
         <div className="bg-[#EAF3DE] border border-[#B0D48A] rounded-xl p-5 text-center mt-2">
