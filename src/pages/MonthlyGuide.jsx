@@ -316,7 +316,7 @@ export default function MonthlyGuide() {
         <div className="flex gap-2 items-start bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3">
           <span className="text-base flex-shrink-0">🚨</span>
           <p className="text-sm font-semibold text-[#791F1F] leading-relaxed">
-            이 단계를 건너뛰다가 전세사기 피해 당하는 경우 많음. 반드시 확인!
+            이 단계를 건너뛰다가 보증금 못 돌려받는 경우 많음. 반드시 확인!
           </p>
         </div>
 
@@ -328,7 +328,7 @@ export default function MonthlyGuide() {
           <div className="text-xs text-[#791F1F]/80 space-y-1 pl-6">
             <p>• <b>표제부</b> — 건물 기본 현황 (면적·층수)</p>
             <p>• <b>갑구</b> — 소유권 (집주인 이름 확인)</p>
-            <p>• <b>을구</b> — 근저당·전세권 (빚이 있는지 확인)</p>
+            <p>• <b>을구</b> — 근저당 (집에 빚이 얼마나 있는지 확인)</p>
           </div>
           <a
             href="https://www.iros.go.kr"
