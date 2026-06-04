@@ -147,7 +147,6 @@ function LinkRow({ href, children }) {
       <span className="text-sm text-gray-700">{children}</span>
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M2 7H12M8 3L12 7L8 11" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 2H9M12 2V5M12 2L8.5 5.5" stroke="#9ca3af" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </a>
   )
