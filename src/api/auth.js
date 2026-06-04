@@ -18,6 +18,18 @@ export function login(email, password) {
   return api.post('/api/auth/login', { email, password })
 }
 
+export function updateNickname(nickname) {
+  return api.put('/api/auth/nickname', { nickname })
+}
+
+export function updatePassword(currentPassword, newPassword) {
+  return api.put('/api/auth/password', { currentPassword, newPassword })
+}
+
+export function withdraw() {
+  return api.delete('/api/auth/withdraw')
+}
+
 export function getCheckedItems() {
   return api.get('/api/checklist')
 }

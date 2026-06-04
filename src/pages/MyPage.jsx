@@ -5,9 +5,7 @@ import Header from '../components/Header'
 
 export default function MyPage() {
   const navigate = useNavigate()
-  const [nickname, setNickname] = useState(localStorage.getItem('nickname') || '')
-  const [editMode, setEditMode] = useState(false)
-  const [inputNick, setInputNick] = useState(nickname)
+  const [nickname] = useState(localStorage.getItem('nickname') || '')
   const isLoggedIn = !!localStorage.getItem('token')
 
   function handleLogout() {
@@ -40,45 +38,18 @@ export default function MyPage() {
               {nickname?.charAt(0) || '👤'}
             </div>
             <div className="flex-1">
-              {editMode ? (
-                <div className="space-y-2">
-                  <input
-                    value={inputNick}
-                    onChange={e => setInputNick(e.target.value)}
-                    className="w-full border border-[#185FA5] rounded-xl px-3 py-2 text-sm outline-none font-medium"
-                    maxLength={12}
-                    autoFocus
-                    placeholder="닉네임 입력"
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleSaveNickname}
-                      className="flex-1 text-xs font-semibold text-white bg-[#185FA5] py-2 rounded-lg"
-                    >
-                      저장
-                    </button>
-                    <button
-                      onClick={() => { setEditMode(false); setInputNick(nickname) }}
-                      className="flex-1 text-xs text-gray-500 border border-gray-200 py-2 rounded-lg"
-                    >
-                      취소
-                    </button>
-                  </div>
+              <>
+                <p className="font-bold text-gray-900 text-lg">{nickname}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-sm text-gray-400">집사 멤버</p>
+                  <button
+                    onClick={() => navigate('/mypage/edit')}
+                    className="text-[11px] text-gray-400 border border-gray-200 rounded-full px-2 py-0.5"
+                  >
+                    회원정보 수정
+                  </button>
                 </div>
-              ) : (
-                <>
-                  <div className="flex items-center gap-2">
-                    <p className="font-bold text-gray-900 text-lg">{nickname}</p>
-                    <button
-                      onClick={() => setEditMode(true)}
-                      className="text-[11px] text-[#185FA5] border border-[#185FA5]/30 bg-[#E6F1FB] rounded-full px-2 py-0.5 font-medium"
-                    >
-                      수정
-                    </button>
-                  </div>
-                  <p className="text-sm text-gray-400 mt-0.5">집사 멤버</p>
-                </>
-              )}
+              </>
             </div>
           </div>
         ) : (

@@ -9,6 +9,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Schedule from './pages/Schedule'
 import MyPage from './pages/MyPage'
+import EditProfile from './pages/EditProfile'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/edit" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
