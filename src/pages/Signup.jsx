@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { signup, login } from '../api/auth'
+import { signup, login, checkNickname } from '../api/auth'
 
 export default function Signup() {
   const navigate = useNavigate()
@@ -8,14 +8,36 @@ export default function Signup() {
   useEffect(() => {
     if (localStorage.getItem('token')) navigate('/', { replace: true })
   }, [])
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [nickname, setNickname] = useState('')
+  const [nicknameStatus, setNicknameStatus] = useState(null) // null | 'checking' | 'ok' | 'dup'
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  async function handleCheckNickname() {
+    if (!nickname.trim()) return
+    setNicknameStatus('checking')
+    try {
+      const res = await checkNickname(nickname.trim())
+      setNicknameStatus(res.data ? 'ok' : 'dup')
+    } catch {
+      setNicknameStatus(null)
+    }
+  }
+
+  function handleNicknameChange(val) {
+    setNickname(val)
+    setNicknameStatus(null) // 닉네임 바꾸면 중복 확인 초기화
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
+    if (nicknameStatus !== 'ok') {
+      setError('닉네임 중복 확인을 해주세요.')
+      return
+    }
     setError('')
     setLoading(true)
     try {
@@ -57,14 +79,35 @@ export default function Signup() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">닉네임</label>
-          <input
-            type="text"
-            value={nickname}
-            onChange={e => setNickname(e.target.value)}
-            placeholder="닉네임 입력"
-            required
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#185FA5] focus:ring-1 focus:ring-[#185FA5]"
-          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={nickname}
+              onChange={e => handleNicknameChange(e.target.value)}
+              placeholder="닉네임 입력"
+              required
+              maxLength={12}
+              className={`flex-1 border rounded-xl px-4 py-3 text-sm outline-none transition-colors ${
+                nicknameStatus === 'ok' ? 'border-green-400 focus:border-green-400' :
+                nicknameStatus === 'dup' ? 'border-red-400 focus:border-red-400' :
+                'border-gray-300 focus:border-[#185FA5]'
+              }`}
+            />
+            <button
+              type="button"
+              onClick={handleCheckNickname}
+              disabled={!nickname.trim() || nicknameStatus === 'checking'}
+              className="px-4 py-3 rounded-xl text-sm font-semibold border border-[#185FA5] text-[#185FA5] disabled:opacity-40 flex-shrink-0"
+            >
+              {nicknameStatus === 'checking' ? '확인 중' : '중복 확인'}
+            </button>
+          </div>
+          {nicknameStatus === 'ok' && (
+            <p className="text-xs text-green-500 mt-1">✅ 사용 가능한 닉네임이에요!</p>
+          )}
+          {nicknameStatus === 'dup' && (
+            <p className="text-xs text-red-400 mt-1">❌ 이미 사용 중인 닉네임이에요.</p>
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>

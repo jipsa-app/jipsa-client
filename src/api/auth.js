@@ -10,6 +10,10 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+export function checkNickname(nickname) {
+  return api.get(`/api/auth/check-nickname?nickname=${encodeURIComponent(nickname)}`)
+}
+
 export function signup(email, password, nickname) {
   return api.post('/api/auth/signup', { email, password, nickname })
 }
