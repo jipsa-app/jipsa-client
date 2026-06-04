@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import CheckItem from '../components/CheckItem'
 import ConversionCalculator from '../components/ConversionCalculator'
-import { getCheckedItems, toggleChecklistItem } from '../api/auth'
+import { getCheckedItems, toggleChecklistItem, updateGuideStep, getMe } from '../api/auth'
 
 const COLOR = '#185FA5'
 const BG = '#E6F1FB'
@@ -196,6 +196,13 @@ export default function JeonseGuide() {
 
   useEffect(() => {
     if (!isLoggedIn) return
+    getMe().then(res => {
+      const dbStep = res.data.jeonseStep
+      if (dbStep && dbStep > 1) {
+        setStep(dbStep)
+        localStorage.setItem('jeonse_step', dbStep)
+      }
+    }).catch(() => {})
     getCheckedItems().then(res => {
       const map = {}
       res.data.filter(id => id.startsWith(PREFIX))
@@ -511,8 +518,8 @@ export default function JeonseGuide() {
       step={step}
       total={TOTAL}
       title={stepTitles[step - 1]}
-      onPrev={() => setStep((s) => { const n = Math.max(1, s - 1); localStorage.setItem('jeonse_step', n); return n })}
-      onNext={() => setStep((s) => { const n = Math.min(TOTAL, s + 1); localStorage.setItem('jeonse_step', n); return n })}
+      onPrev={() => setStep((s) => { const n = Math.max(1, s - 1); localStorage.setItem('jeonse_step', n); if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {}); return n })}
+      onNext={() => setStep((s) => { const n = Math.min(TOTAL, s + 1); localStorage.setItem('jeonse_step', n); if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {}); return n })}
       loginBanner={loginBanner}
       isLoggedIn={isLoggedIn}
       onLogin={() => navigate('/login')}

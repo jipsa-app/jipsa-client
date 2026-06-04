@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import BottomNav from '../components/BottomNav'
+import { getMe, updateAssetProfileDB } from '../api/auth'
 
 // 대출 상품 추천 로직
 function getRecommendations({ type, cash, targetPrice, income }) {
@@ -118,6 +119,7 @@ function getRecommendations({ type, cash, targetPrice, income }) {
 
 export default function AssetProfile() {
   const navigate = useNavigate()
+  const isLoggedIn = !!localStorage.getItem('token')
 
   const saved = JSON.parse(localStorage.getItem('asset_profile') || '{}')
   const [cash, setCash] = useState(saved.cash || '')
@@ -126,6 +128,26 @@ export default function AssetProfile() {
   const [targetPrice, setTargetPrice] = useState(saved.targetPrice || '')
   const [result, setResult] = useState(saved.result || null)
 
+  // 로그인 시 DB에서 자산 정보 불러오기
+  useEffect(() => {
+    if (!isLoggedIn) return
+    getMe().then(res => {
+      if (res.data.assetProfile) {
+        try {
+          const data = JSON.parse(res.data.assetProfile)
+          setCash(data.cash || '')
+          setIncome(data.income || '')
+          setType(data.type || 'jeonse')
+          setTargetPrice(data.targetPrice || '')
+          if (data.cash && data.income && data.targetPrice) {
+            const r = getRecommendations({ type: data.type || 'jeonse', cash: Number(data.cash), targetPrice: Number(data.targetPrice), income: Number(data.income) })
+            setResult(r)
+          }
+        } catch {}
+      }
+    }).catch(() => {})
+  }, [])
+
   function handleAnalyze() {
     const c = Number(cash)
     const i = Number(income)
@@ -133,7 +155,9 @@ export default function AssetProfile() {
     if (!c || !i || !t) return
     const r = getRecommendations({ type, cash: c, targetPrice: t, income: i })
     setResult(r)
-    localStorage.setItem('asset_profile', JSON.stringify({ cash, income, type, targetPrice, result: r }))
+    const profileData = { cash, income, type, targetPrice }
+    localStorage.setItem('asset_profile', JSON.stringify({ ...profileData, result: r }))
+    if (isLoggedIn) updateAssetProfileDB(profileData).catch(() => {})
   }
 
   const needAmount = Number(targetPrice) - Number(cash)

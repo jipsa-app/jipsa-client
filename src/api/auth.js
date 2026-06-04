@@ -22,6 +22,18 @@ export function login(email, password) {
   return api.post('/api/auth/login', { email, password })
 }
 
+export function getMe() {
+  return api.get('/api/member/me')
+}
+
+export function updateGuideStep(type, step) {
+  return api.put('/api/member/guide-step', { type, step })
+}
+
+export function updateAssetProfileDB(assetProfile) {
+  return api.put('/api/member/asset', { assetProfile: JSON.stringify(assetProfile) })
+}
+
 export function updateNickname(nickname) {
   return api.put('/api/auth/nickname', { nickname })
 }

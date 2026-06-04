@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import CheckItem from '../components/CheckItem'
 import MonthlyCalculator from '../components/MonthlyCalculator'
 import ConversionCalculator from '../components/ConversionCalculator'
-import { getCheckedItems, toggleChecklistItem } from '../api/auth'
+import { getCheckedItems, toggleChecklistItem, updateGuideStep, getMe } from '../api/auth'
 
 const COLOR = '#BA7517'
 const BG = '#FAEEDA'
@@ -232,6 +232,15 @@ export default function MonthlyGuide() {
 
   useEffect(() => {
     if (!isLoggedIn) return
+    // DB에서 가이드 단계 불러오기
+    getMe().then(res => {
+      const dbStep = res.data.monthlyStep
+      if (dbStep && dbStep > 1) {
+        setStep(dbStep)
+        localStorage.setItem('monthly_step', dbStep)
+      }
+    }).catch(() => {})
+    // 체크 기록 불러오기
     getCheckedItems().then(res => {
       const map = {}
       res.data.filter(id => id.startsWith(PREFIX))
@@ -450,8 +459,8 @@ export default function MonthlyGuide() {
         step={step}
         total={TOTAL}
         title={stepTitles[step - 1]}
-        onPrev={() => setStep((s) => { const n = Math.max(1, s - 1); localStorage.setItem('monthly_step', n); return n })}
-        onNext={() => setStep((s) => { const n = Math.min(TOTAL, s + 1); localStorage.setItem('monthly_step', n); return n })}
+        onPrev={() => setStep((s) => { const n = Math.max(1, s - 1); localStorage.setItem('monthly_step', n); if (isLoggedIn) updateGuideStep('MONTHLY', n).catch(() => {}); return n })}
+        onNext={() => setStep((s) => { const n = Math.min(TOTAL, s + 1); localStorage.setItem('monthly_step', n); if (isLoggedIn) updateGuideStep('MONTHLY', n).catch(() => {}); return n })}
         loginBanner={loginBanner}
         isLoggedIn={isLoggedIn}
         onLogin={() => navigate('/login')}
