@@ -14,10 +14,10 @@ export default function SplashScreen({ onDone }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-100 transition-opacity duration-500"
+      className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-mobile h-full z-[100] bg-[#185FA5] flex flex-col items-center justify-center transition-opacity duration-500"
       style={{ opacity: fadeOut ? 0 : 1, pointerEvents: fadeOut ? 'none' : 'auto' }}
     >
-      <div className="relative w-full max-w-mobile h-full bg-[#185FA5] flex flex-col items-center justify-center overflow-hidden">
+      <div className="flex flex-col items-center justify-center w-full h-full">
       {/* 로고 */}
       <div className="flex flex-col items-center gap-4 animate-pulse">
         <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-xl text-5xl">
