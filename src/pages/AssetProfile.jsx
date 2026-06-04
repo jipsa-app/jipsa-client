@@ -65,35 +65,41 @@ function getRecommendations({ type, cash, targetPrice, income, age }) {
   }
 
   if (type === 'sale') {
-    // 디딤돌 대출
-    const didiLimit = income <= 6000 ? 30000 : 0
-    if (didiLimit > 0) {
+    // 디딤돌 대출 — 주택가격 5억 이하 조건 체크
+    const didiPriceOk = targetPrice <= 50000 // 5억 = 50,000만원
+    const didiIncomeOk = income <= 6000
+    if (didiIncomeOk) {
       results.push({
         name: '디딤돌 대출',
         color: '#534AB7',
         bg: '#EEEDFE',
-        eligible: need <= didiLimit,
-        limit: didiLimit,
+        eligible: didiPriceOk && need <= 30000,
+        limit: 30000,
         rate: 2.65,
-        desc: '연소득 6천만원 이하 · 최대 3억 · 주택가격 5억 이하',
-        tip: need <= didiLimit ? '✅ 조건 충족!' : `⚠️ 한도(${didiLimit.toLocaleString()}만원) 초과`,
+        desc: `연소득 6천만원 이하 · 최대 3억 · 주택가격 5억 이하 · 현재 목표가 ${(targetPrice / 10000).toFixed(1)}억`,
+        tip: !didiPriceOk
+          ? `❌ 주택가격 ${(targetPrice / 10000).toFixed(1)}억 — 5억 초과로 신청 불가`
+          : need <= 30000 ? '✅ 조건 충족!' : '⚠️ 한도(3억) 초과',
         url: 'https://nhuf.molit.go.kr/FP/FP05/FP0502/FP05020101.jsp',
         urlLabel: '디딤돌 대출 신청',
       })
     }
 
-    // 보금자리론
-    const bogumlimit = income <= 7000 ? 36000 : income <= 8000 ? 36000 : 0
-    if (bogumlimit > 0) {
+    // 보금자리론 — 주택가격 6억 이하 조건 체크
+    const bogumPriceOk = targetPrice <= 60000 // 6억 = 60,000만원
+    const bogumLimit = income <= 7000 ? 36000 : 0
+    if (bogumLimit > 0) {
       results.push({
         name: '보금자리론',
         color: '#BA7517',
         bg: '#FAEEDA',
-        eligible: need <= bogumlimit,
-        limit: bogumlimit,
+        eligible: bogumPriceOk && need <= bogumLimit,
+        limit: bogumLimit,
         rate: 3.8,
-        desc: '연소득 7천만원 이하 · 최대 3.6억 · 고정금리',
-        tip: need <= bogumlimit ? '✅ 조건 충족!' : `⚠️ 한도(${bogumlimit.toLocaleString()}만원) 초과`,
+        desc: `연소득 7천만원 이하 · 최대 3.6억 · 주택가격 6억 이하 · 고정금리`,
+        tip: !bogumPriceOk
+          ? `❌ 주택가격 ${(targetPrice / 10000).toFixed(1)}억 — 6억 초과로 신청 불가`
+          : need <= bogumLimit ? '✅ 조건 충족!' : '⚠️ 한도(3.6억) 초과',
         url: 'https://www.hf.go.kr/hf/sub01/sub01_01_01.do',
         urlLabel: '한국주택금융공사 바로가기',
       })
@@ -107,7 +113,7 @@ function getRecommendations({ type, cash, targetPrice, income, age }) {
       eligible: true,
       limit: null,
       rate: 4.5,
-      desc: '소득 제한 없음 · LTV 40~70% · 스트레스 DSR 3단계 적용',
+      desc: '소득·주택가격 제한 없음 · LTV 40~70% · 스트레스 DSR 3단계 적용',
       tip: '⚠️ 스트레스 DSR 3단계 (금리 1.5% 가산) 적용 — 은행 상담 필수',
       url: 'https://www.fss.or.kr/fss/main/main.do',
       urlLabel: '금융감독원 대출 비교',
@@ -322,9 +328,14 @@ export default function AssetProfile() {
                   </div>
                 ))}
 
-                <p className="text-xs text-gray-300 text-center px-4">
-                  * 실제 대출 가능 여부는 금융기관 심사에 따라 다를 수 있어요
-                </p>
+                <div className="bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 space-y-1">
+                  <p className="text-xs text-gray-500 font-semibold">⚠️ 참고사항</p>
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    • 표시된 금리는 <b>2026년 기준 참고값</b>으로, 실제 금리는 시장 상황에 따라 변동돼요.<br/>
+                    • 대출 가능 여부와 한도는 <b>금융기관 심사</b>에 따라 다를 수 있어요.<br/>
+                    • 최종 대출 전 반드시 <b>은행 상담</b>을 받으세요.
+                  </p>
+                </div>
               </>
             )}
           </div>
