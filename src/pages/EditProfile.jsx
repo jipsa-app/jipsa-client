@@ -7,6 +7,7 @@ import { updateNickname, updatePassword, withdraw } from '../api/auth'
 export default function EditProfile() {
   const navigate = useNavigate()
   const currentNickname = localStorage.getItem('nickname') || ''
+  const email = localStorage.getItem('email') || ''
 
   const [nickname, setNickname] = useState(currentNickname)
   const [currentPassword, setCurrentPassword] = useState('')
@@ -67,6 +68,16 @@ export default function EditProfile() {
       {toast && <Toast message={toast.msg} type={toast.type} onClose={() => setToast(null)} />}
 
       <div className="px-4 py-5 space-y-4">
+
+        {/* 내 계정 정보 */}
+        <Section title="내 계정">
+          <div className="space-y-1">
+            <label className="text-xs font-medium text-gray-500">이메일 (아이디)</label>
+            <div className="w-full border border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-400 bg-gray-50">
+              {email || '이메일 정보 없음'}
+            </div>
+          </div>
+        </Section>
 
         {/* 닉네임 변경 */}
         <Section title="닉네임 변경">

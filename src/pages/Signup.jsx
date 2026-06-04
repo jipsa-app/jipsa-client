@@ -23,6 +23,7 @@ export default function Signup() {
       const res = await login(email, password)
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('nickname', res.data.nickname)
+      localStorage.setItem('email', res.data.email)
       navigate('/')
     } catch (err) {
       setError(err.response?.data?.message || '회원가입에 실패했습니다. 다시 시도해주세요.')

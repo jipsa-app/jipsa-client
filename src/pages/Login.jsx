@@ -21,6 +21,7 @@ export default function Login() {
       const res = await login(email, password)
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('nickname', res.data.nickname)
+      localStorage.setItem('email', res.data.email)
       navigate('/')
     } catch (err) {
       setError(err.response?.data?.message || '이메일 또는 비밀번호가 올바르지 않습니다.')

@@ -15,6 +15,7 @@ export default function MyPage() {
     localStorage.removeItem('jeonse_step')
     localStorage.removeItem('sale_step')
     localStorage.removeItem('urgent_schedule')
+    localStorage.removeItem('email')
     navigate('/')
   }
 
