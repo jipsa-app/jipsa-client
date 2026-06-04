@@ -10,6 +10,7 @@ import Signup from './pages/Signup'
 import Schedule from './pages/Schedule'
 import MyPage from './pages/MyPage'
 import EditProfile from './pages/EditProfile'
+import AssetProfile from './pages/AssetProfile'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<EditProfile />} />
+        <Route path="/mypage/assets" element={<AssetProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
