@@ -1,15 +1,16 @@
 export default function CheckItem({ checked, onChange, children, color = '#185FA5' }) {
   return (
-    <label className="flex items-start gap-3 cursor-pointer py-2">
+    <div className="flex items-start gap-3 cursor-pointer py-2" onClick={() => onChange(!checked)}>
       <button
         type="button"
-        onClick={() => onChange(!checked)}
+        onClick={e => { e.stopPropagation(); onChange(!checked) }}
         className="w-5 h-5 rounded flex-shrink-0 mt-0.5 border-2 flex items-center justify-center transition-all"
         style={{
           borderColor: checked ? color : '#d1d5db',
           backgroundColor: checked ? color : 'white',
         }}
         aria-checked={checked}
+        role="checkbox"
       >
         {checked && (
           <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
@@ -24,6 +25,6 @@ export default function CheckItem({ checked, onChange, children, color = '#185FA
       >
         {children}
       </span>
-    </label>
+    </div>
   )
 }

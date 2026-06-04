@@ -101,7 +101,8 @@ export default function EditProfile() {
   async function handleWithdraw() {
     try {
       await withdraw()
-      localStorage.clear()
+      ;['token','nickname','email','monthly_step','jeonse_step','sale_step','urgent_schedule','asset_profile']
+        .forEach(k => localStorage.removeItem(k))
       navigate('/')
     } catch (e) {
       showToast('회원 탈퇴에 실패했어요.')
