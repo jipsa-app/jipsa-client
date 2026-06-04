@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import CheckItem from '../components/CheckItem'
 import MonthlyCalculator from '../components/MonthlyCalculator'
+import ConversionCalculator from '../components/ConversionCalculator'
 import { getCheckedItems, toggleChecklistItem } from '../api/auth'
 
 const COLOR = '#BA7517'
@@ -211,6 +212,7 @@ export default function MonthlyGuide() {
   const [step, setStep] = useState(() => Number(localStorage.getItem('monthly_step')) || 1)
   const [checks, setChecks] = useState({})
   const [showCalc, setShowCalc] = useState(false)
+  const [showConversion, setShowConversion] = useState(false)
   const isLoggedIn = !!localStorage.getItem('token')
 
   const loginBanner = !isLoggedIn && (
@@ -274,14 +276,24 @@ export default function MonthlyGuide() {
           <LinkRow href="https://www.peterpanz.com">피터팬의 좋은방 구하기</LinkRow>
         </div>
 
-        <button
-          onClick={() => setShowCalc(true)}
-          className="w-full py-3 rounded-xl text-sm font-semibold text-white"
-          style={{ backgroundColor: COLOR }}
-        >
-          📊 월 지출 계산기 열기
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowCalc(true)}
+            className="flex-1 py-3 rounded-xl text-sm font-semibold text-white"
+            style={{ backgroundColor: COLOR }}
+          >
+            📊 월 지출 계산기
+          </button>
+          <button
+            onClick={() => setShowConversion(true)}
+            className="flex-1 py-3 rounded-xl text-sm font-semibold border"
+            style={{ borderColor: COLOR, color: COLOR }}
+          >
+            🔄 전월세 전환
+          </button>
+        </div>
         {showCalc && <MonthlyCalculator onClose={() => setShowCalc(false)} />}
+        {showConversion && <ConversionCalculator onClose={() => setShowConversion(false)} />}
       </div>
     ),
 

@@ -62,7 +62,15 @@ function ContractCard({ contract, onEdit, onDelete }) {
           <span className="text-xs font-bold px-2 py-1 rounded-full text-white" style={{ backgroundColor: color }}>
             {TYPE_LABEL[contract.type]}
           </span>
-          <span className="text-sm font-semibold text-gray-800">{contract.address}</span>
+          <a
+            href={`https://map.naver.com/v5/search/${encodeURIComponent(contract.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-semibold text-gray-800 underline decoration-dotted underline-offset-2"
+            onClick={e => e.stopPropagation()}
+          >
+            {contract.address} 🗺️
+          </a>
         </div>
         <div className="flex gap-2">
           <button onClick={onEdit} className="text-xs text-gray-400 hover:text-gray-600">수정</button>
@@ -80,7 +88,7 @@ function ContractCard({ contract, onEdit, onDelete }) {
         {extraDates.map(d => <DateRow key={d.label} label={d.label} date={d.date} />)}
         <DateRow label="계약 만료일" date={contract.expiryDate} highlight />
         {contract.memo && (
-          <p className="text-xs text-gray-400 pt-2">{contract.memo}</p>
+          <p className="text-xs text-gray-400 pt-2 whitespace-pre-line">{contract.memo}</p>
         )}
       </div>
     </div>
@@ -155,11 +163,12 @@ function ContractForm({ initial, onSave, onCancel }) {
 
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1">메모 (선택)</label>
-          <input
+          <textarea
             value={form.memo}
             onChange={e => set('memo', e.target.value)}
-            placeholder="예) 집주인 연락처, 공인중개사 이름 등"
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#185FA5]"
+            placeholder={"예) 집주인 연락처: 010-1234-5678\n공인중개사: 홍길동 공인중개사\n특이사항: 주차 1대 포함"}
+            rows={3}
+            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#185FA5] resize-none"
           />
         </div>
 

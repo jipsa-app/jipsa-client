@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import CheckItem from '../components/CheckItem'
+import ConversionCalculator from '../components/ConversionCalculator'
 import { getCheckedItems, toggleChecklistItem } from '../api/auth'
 
 const COLOR = '#185FA5'
@@ -175,6 +176,7 @@ export default function JeonseGuide() {
   const [step, setStep] = useState(() => Number(localStorage.getItem('jeonse_step')) || 1)
   const [checks, setChecks] = useState({})
   const [priceInput, setPriceInput] = useState({ senior: '', mine: '', market: '' })
+  const [showConversion, setShowConversion] = useState(false)
   const isLoggedIn = !!localStorage.getItem('token')
 
   const loginBanner = !isLoggedIn && (
@@ -253,6 +255,15 @@ export default function JeonseGuide() {
           <LinkRow href="https://kbland.kr">KB부동산</LinkRow>
           <LinkRow href="https://www.peterpanz.com">피터팬의 좋은방 구하기</LinkRow>
         </div>
+
+        <button
+          onClick={() => setShowConversion(true)}
+          className="w-full py-3 rounded-xl text-sm font-semibold border"
+          style={{ borderColor: COLOR, color: COLOR }}
+        >
+          🔄 전월세 전환 계산기
+        </button>
+        {showConversion && <ConversionCalculator onClose={() => setShowConversion(false)} />}
       </div>
     ),
 
