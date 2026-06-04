@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getContracts } from '../api/contract'
 import BottomNav from '../components/BottomNav'
+import Header from '../components/Header'
 
 const types = [
   {
@@ -96,31 +97,31 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-white pb-16">
-      {/* 헤더 */}
-      <div className="px-5 pt-10 pb-6">
-        <div className="flex items-start justify-between">
-          <div className="text-4xl mb-3">🏠</div>
-          {nickname ? (
-            <div className="flex items-center gap-2 mt-1">
+      {/* 통일된 헤더 */}
+      <Header
+        title="집사 🏠"
+        noBack
+        right={
+          nickname ? (
+            <button onClick={() => navigate('/mypage')} className="flex items-center gap-1.5">
               <span className="text-sm text-gray-600 font-medium">{nickname}님</span>
-              <button
-                onClick={handleLogout}
-                className="text-xs text-gray-400 underline"
-              >
-                로그아웃
-              </button>
-            </div>
+              <div className="w-7 h-7 rounded-full bg-[#E6F1FB] flex items-center justify-center text-sm">👤</div>
+            </button>
           ) : (
             <button
               onClick={() => navigate('/login')}
-              className="mt-1 text-sm text-[#185FA5] font-semibold border border-[#185FA5] rounded-lg px-3 py-1"
+              className="text-sm text-[#185FA5] font-semibold border border-[#185FA5] rounded-lg px-3 py-1"
             >
               로그인
             </button>
-          )}
-        </div>
-        <h1 className="text-2xl font-bold text-gray-900 leading-tight">집 구하기 가이드</h1>
-        <p className="text-sm text-gray-500 mt-1">처음 집 구하는 분들을 위한 부동산 거래 단계별 안내</p>
+          )
+        }
+      />
+
+      {/* 서브 타이틀 */}
+      <div className="px-5 pt-5 pb-4">
+        <h1 className="text-xl font-bold text-gray-900 leading-tight">거래 유형을 선택하세요</h1>
+        <p className="text-sm text-gray-400 mt-1">처음 집 구하는 분들을 위한 단계별 안내</p>
       </div>
 
       {/* 임박 일정 배너 */}

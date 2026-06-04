@@ -238,14 +238,14 @@ export default function Schedule() {
 
   if (loading) return (
     <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-gray-50">
-      <Header title="계약 일정 관리" badge="D-day 자동계산" badgeStyle="bg-[#E6F1FB] text-[#185FA5]" />
+      <Header title="계약 일정 관리" badge="D-day 자동계산" badgeStyle="bg-[#E6F1FB] text-[#185FA5]" noBack />
       <Spinner />
     </div>
   )
 
   return (
     <div className="mx-auto max-w-mobile min-h-screen flex flex-col bg-gray-50">
-      <Header title="계약 일정 관리" badge="D-day 자동계산" badgeStyle="bg-[#E6F1FB] text-[#185FA5]" />
+      <Header title="계약 일정 관리" badge="D-day 자동계산" badgeStyle="bg-[#E6F1FB] text-[#185FA5]" noBack />
       {toast && <Toast message={toast} onClose={() => setToast(null)} />}
 
       <div className="flex-1 px-4 py-4 space-y-3 overflow-y-auto">

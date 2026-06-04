@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
+import Header from '../components/Header'
 
 export default function MyPage() {
   const navigate = useNavigate()
@@ -28,9 +29,10 @@ export default function MyPage() {
 
   return (
     <div className="mx-auto max-w-mobile min-h-screen bg-gray-50 pb-20">
+      <Header title="마이페이지" noBack />
 
       {/* 프로필 헤더 */}
-      <div className="bg-white px-5 pt-12 pb-6 border-b border-gray-100">
+      <div className="bg-white px-5 pt-5 pb-6 border-b border-gray-100">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-[#E6F1FB] flex items-center justify-center text-2xl flex-shrink-0">
             👤
