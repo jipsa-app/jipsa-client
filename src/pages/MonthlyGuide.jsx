@@ -479,7 +479,7 @@ export default function MonthlyGuide() {
         <div className="flex gap-2 items-start bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3">
           <span className="text-base flex-shrink-0">⏰</span>
           <p className="text-sm font-semibold text-[#791F1F] leading-relaxed">
-            전입신고 + 확정일자는 이사 당일! 효력은 다음날 0시부터 발생합니다.
+            전입신고 + 확정일자는 이사 당일! 효력은 다음날 0시부터 발생해요.
           </p>
         </div>
 

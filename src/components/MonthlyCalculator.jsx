@@ -73,7 +73,7 @@ export default function MonthlyCalculator({ onClose }) {
                 </div>
                 {ratio > 50 && (
                   <p className="text-xs text-[#791F1F] bg-[#FCEBEB] rounded-lg px-3 py-2">
-                    ⚠️ 소득의 50% 초과 — 주거비 부담이 매우 높습니다
+                    ⚠️ 소득의 50% 초과 — 주거비 부담이 매우 높아요
                   </p>
                 )}
                 {ratio > 40 && ratio <= 50 && (

@@ -365,7 +365,7 @@ export default function JeonseGuide() {
         </div>
 
         <WarningBanner>
-          건물 주변 공실이 많으면 임대 수요가 낮은 지역일 수 있어요. 만기 후 보증금 반환이 어려울 수 있습니다.
+          건물 주변 공실이 많으면 임대 수요가 낮은 지역일 수 있어요. 만기 후 보증금 반환이 어려울 수 있어요.
         </WarningBanner>
       </div>
     ),
@@ -375,7 +375,7 @@ export default function JeonseGuide() {
         <div className="flex gap-2 items-start bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3">
           <span className="text-base flex-shrink-0">🚨</span>
           <p className="text-sm font-semibold text-[#791F1F] leading-relaxed">
-            계약 전 서류 확인 — 전세사기의 90%는 여기서 예방 가능합니다.
+            계약 전 서류 확인 — 전세사기의 90%는 여기서 예방 가능해요.
           </p>
         </div>
 
