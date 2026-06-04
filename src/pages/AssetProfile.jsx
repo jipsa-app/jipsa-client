@@ -140,12 +140,14 @@ export default function AssetProfile() {
   const [result, setResult] = useState(saved.result || null)
   const [memberAge, setMemberAge] = useState(null) // DB에서 불러온 나이
 
-  // 로그인 시 DB에서 자산 정보 + 나이 불러오기
+  // 로그인 시 DB에서 나이 불러오기 (자산 정보는 localStorage 우선)
   useEffect(() => {
     if (!isLoggedIn) return
     getMe().then(res => {
       if (res.data.age) setMemberAge(res.data.age)
-      if (res.data.assetProfile) {
+      // localStorage에 데이터가 없을 때만 DB에서 불러오기
+      const hasLocal = localStorage.getItem('asset_profile')
+      if (!hasLocal && res.data.assetProfile) {
         try {
           const data = JSON.parse(res.data.assetProfile)
           setCash(data.cash || '')
