@@ -281,6 +281,18 @@ export default function JeonseGuide() {
             CCTV 위치 및 작동 여부 확인
           </CheckItem>
         </div>
+        <div className="rounded-xl border p-4 space-y-2" style={{ backgroundColor: BG, borderColor: BORDER }}>
+          <div className="flex items-center gap-2">
+            <span>🌡️</span>
+            <span className="font-semibold text-sm" style={{ color: TEXT }}>난방 방식 비교</span>
+          </div>
+          <p className="text-sm leading-relaxed" style={{ color: TEXT + 'CC' }}>
+            <b>개별난방</b> — 내가 직접 조절, 가장 권장<br/>
+            <b>중앙난방</b> — 온도 조절 제한적<br/>
+            <b>지역난방</b> — 비용 저렴(약 30%), 조절 불가
+          </p>
+        </div>
+
         <WarningBanner>
           건물 주변 공실이 많으면 임대 수요가 낮은 지역일 수 있어요. 만기 후 보증금 반환이 어려울 수 있습니다.
         </WarningBanner>
@@ -376,6 +388,9 @@ export default function JeonseGuide() {
           <CheckItem checked={!!checks['4a']} onChange={() => toggle('4a')} color={COLOR}>
             계약금은 임대인 본인 명의 계좌로만 송금
           </CheckItem>
+          <CheckItem checked={!!checks['4b']} onChange={() => toggle('4b')} color={COLOR}>
+            계약서에 보증금·계약 기간·잔금일 명확히 기재 확인
+          </CheckItem>
         </div>
         <div className="bg-[#E6F1FB] border border-[#A8C8E8] rounded-xl p-4">
           <p className="text-xs font-bold text-[#0C447C] uppercase tracking-wide mb-3">✍️ 특약 필수 3가지</p>
@@ -383,7 +398,7 @@ export default function JeonseGuide() {
             {[
               '잔금일 전 소유권 이전·근저당 설정 금지',
               '전세보증보험 가입 협조 의무',
-              '입주 전 배·수관 이상 시 조건 명시',
+              '입주 전 도배·장판 교체 임대인 부담',
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-[#0C447C]">
                 <span className="font-bold flex-shrink-0">{i + 1}.</span>
