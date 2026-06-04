@@ -383,7 +383,7 @@ export default function SaleGuide() {
           </CheckItem>
         </div>
         <WarningBanner>
-          계약금·중도금·잔금 이체확인증은 모두 보관해요. 추후 양도세 신고 및 분쟁 해결에 필요해요.
+          계약금·중도금·잔금 이체확인증은 모두 보관하세요. 추후 양도세 신고 및 분쟁 해결에 필요합니다.
         </WarningBanner>
       </div>
     ),

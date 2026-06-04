@@ -233,7 +233,7 @@ export default function Checklist() {
           <div className="bg-[#EAF3DE] border border-[#B0D48A] rounded-xl p-5 text-center">
             <div className="text-3xl mb-2">✅</div>
             <p className="font-bold text-[#27500A]">모든 항목 확인되었어요!</p>
-            <p className="text-sm text-[#639922] mt-1">안전한 전세 계약을 위한 준비가 완료됐어요!</p>
+            <p className="text-sm text-[#639922] mt-1">안전한 전세 계약을 위한 준비가 완료됐습니다.</p>
           </div>
         )}
       </div>
