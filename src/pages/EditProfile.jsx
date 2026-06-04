@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Toast from '../components/Toast'
-import { updateNickname, updatePassword, withdraw } from '../api/auth'
+import { updateNickname, updatePassword, withdraw, checkNickname } from '../api/auth'
 
 export default function EditProfile() {
   const navigate = useNavigate()
@@ -10,6 +10,7 @@ export default function EditProfile() {
   const email = localStorage.getItem('email') || ''
 
   const [nickname, setNickname] = useState(currentNickname)
+  const [nicknameStatus, setNicknameStatus] = useState(null) // null | 'checking' | 'ok' | 'dup' | 'same'
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -20,8 +21,30 @@ export default function EditProfile() {
 
   const showToast = (msg, type = 'error') => setToast({ msg, type })
 
+  function handleNicknameChange(val) {
+    setNickname(val)
+    setNicknameStatus(null)
+  }
+
+  async function handleCheckNickname() {
+    if (!nickname.trim()) return
+    if (nickname.trim() === currentNickname) {
+      setNicknameStatus('same')
+      return
+    }
+    setNicknameStatus('checking')
+    try {
+      const res = await checkNickname(nickname.trim())
+      setNicknameStatus(res.data ? 'ok' : 'dup')
+    } catch {
+      setNicknameStatus(null)
+    }
+  }
+
   async function handleNickname() {
     if (!nickname.trim()) return showToast('닉네임을 입력해주세요.')
+    if (nickname.trim() === currentNickname) return showToast('현재 닉네임과 같아요.')
+    if (nicknameStatus !== 'ok') return showToast('닉네임 중복 확인을 해주세요.')
     setLoadingNick(true)
     try {
       await updateNickname(nickname.trim())
@@ -82,16 +105,37 @@ export default function EditProfile() {
         {/* 닉네임 변경 */}
         <Section title="닉네임 변경">
           <div className="space-y-3">
-            <InputField
-              label="닉네임"
-              value={nickname}
-              onChange={setNickname}
-              placeholder="변경할 닉네임을 입력하세요"
-              maxLength={12}
-            />
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-gray-500">닉네임</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={nickname}
+                  onChange={e => handleNicknameChange(e.target.value)}
+                  placeholder="변경할 닉네임을 입력하세요"
+                  maxLength={12}
+                  className={`flex-1 border rounded-xl px-4 py-3 text-sm outline-none transition-colors ${
+                    nicknameStatus === 'ok' ? 'border-green-400' :
+                    nicknameStatus === 'dup' ? 'border-red-400' :
+                    'border-gray-200 focus:border-[#185FA5]'
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={handleCheckNickname}
+                  disabled={!nickname.trim() || nicknameStatus === 'checking'}
+                  className="px-3 py-3 rounded-xl text-sm font-semibold border border-[#185FA5] text-[#185FA5] disabled:opacity-40 flex-shrink-0"
+                >
+                  {nicknameStatus === 'checking' ? '확인 중' : '중복 확인'}
+                </button>
+              </div>
+              {nicknameStatus === 'ok' && <p className="text-xs text-green-500">✅ 사용 가능한 닉네임이에요!</p>}
+              {nicknameStatus === 'dup' && <p className="text-xs text-red-400">❌ 이미 사용 중인 닉네임이에요.</p>}
+              {nicknameStatus === 'same' && <p className="text-xs text-gray-400">현재 사용 중인 닉네임이에요.</p>}
+            </div>
             <button
               onClick={handleNickname}
-              disabled={loadingNick || !nickname.trim() || nickname.trim() === currentNickname}
+              disabled={loadingNick || nicknameStatus !== 'ok'}
               className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#185FA5] disabled:opacity-40 transition-opacity"
             >
               {loadingNick ? '변경 중...' : '닉네임 변경'}
