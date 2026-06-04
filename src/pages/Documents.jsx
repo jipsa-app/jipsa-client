@@ -333,6 +333,7 @@ function DocDetail({ doc, onBack }) {
           </a>
         </div>
       </div>
+      <BottomNav />
     </div>
   )
 }

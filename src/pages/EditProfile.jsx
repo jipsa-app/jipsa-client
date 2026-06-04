@@ -72,6 +72,7 @@ export default function EditProfile() {
       await updateNickname(nickname.trim())
       localStorage.setItem('nickname', nickname.trim())
       showToast('닉네임이 변경되었어요! ✅', 'success')
+      setTimeout(() => navigate('/mypage'), 1200)
     } catch (e) {
       showToast(e.response?.data?.message || '닉네임 변경에 실패했어요.')
     } finally {

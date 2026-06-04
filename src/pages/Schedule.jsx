@@ -270,11 +270,15 @@ export default function Schedule() {
 
       <div className="flex-1 px-4 py-4 space-y-3 overflow-y-auto">
         {!isLoggedIn && (
-          <div className="bg-[#E6F1FB] border border-[#A8C8E8] rounded-xl px-4 py-4 text-center">
-            <p className="text-sm text-[#0C447C] font-medium mb-3">로그인하면 일정을 저장할 수 있어요</p>
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="text-5xl mb-4">📅</div>
+            <p className="font-bold text-gray-800 text-lg mb-2">로그인이 필요해요</p>
+            <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+              로그인하면 계약 일정을 저장하고<br/>D-day를 자동으로 계산해드려요
+            </p>
             <button
               onClick={() => navigate('/login')}
-              className="text-sm font-semibold text-white bg-[#185FA5] px-6 py-2 rounded-xl"
+              className="text-sm font-semibold text-white bg-[#185FA5] px-8 py-3 rounded-xl"
             >
               로그인하기
             </button>
