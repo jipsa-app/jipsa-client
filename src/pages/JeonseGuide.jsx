@@ -104,7 +104,7 @@ function StepLayout({ step, total, title, children, onPrev, onNext, onReset, che
           <div className="flex items-center justify-between mb-2 px-1">
             <span className="text-xs text-gray-400">{checkedCount}/{totalCount} 완료</span>
             {onReset && checkedCount > 0 && (
-              <button onClick={onReset} className="text-xs text-gray-300 underline underline-offset-2">초기화</button>
+              <button onClick={onReset} className="text-xs text-gray-400 underline underline-offset-2">초기화</button>
             )}
           </div>
         )}
@@ -118,9 +118,8 @@ function StepLayout({ step, total, title, children, onPrev, onNext, onReset, che
         </button>
         <button
           onClick={onNext}
-          disabled={step === total}
-          className="flex-[2] py-3 rounded-xl text-sm font-semibold text-white disabled:opacity-30"
-          style={{ backgroundColor: step === total ? '#d1d5db' : COLOR }}
+          className="flex-[2] py-3 rounded-xl text-sm font-semibold text-white"
+          style={{ backgroundColor: COLOR }}
         >
           {step === total ? '완료 🎉' : '다음 단계'}
         </button>
@@ -246,18 +245,24 @@ export default function JeonseGuide() {
   }
 
   const handleNext = () => {
+    if (step === TOTAL) {
+      localStorage.setItem('jeonse_step', 1)
+      if (isLoggedIn) updateGuideStep('JEONSE', 1).catch(() => {})
+      navigate('/')
+      return
+    }
     const keys = STEP_ITEMS[step] || []
     const unchecked = keys.filter(k => !checks[k])
     if (unchecked.length > 0) {
       setPendingNext(() => () => {
-        const n = Math.min(TOTAL, step + 1)
+        const n = step + 1
         setStep(n)
         localStorage.setItem('jeonse_step', n)
         if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {})
       })
       setShowWarning(true)
     } else {
-      const n = Math.min(TOTAL, step + 1)
+      const n = step + 1
       setStep(n)
       localStorage.setItem('jeonse_step', n)
       if (isLoggedIn) updateGuideStep('JEONSE', n).catch(() => {})

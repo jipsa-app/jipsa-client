@@ -99,13 +99,13 @@ function StepLayout({ step, total, title, children, onPrev, onNext, onReset, che
           <div className="flex items-center justify-between mb-2 px-1">
             <span className="text-xs text-gray-400">{checkedCount}/{totalCount} 완료</span>
             {onReset && checkedCount > 0 && (
-              <button onClick={onReset} className="text-xs text-gray-300 underline underline-offset-2">초기화</button>
+              <button onClick={onReset} className="text-xs text-gray-400 underline underline-offset-2">초기화</button>
             )}
           </div>
         )}
         <div className="flex gap-2">
           <button onClick={onPrev} disabled={step === 1} className="flex-1 py-3 rounded-xl text-sm font-semibold border border-gray-200 text-gray-600 disabled:opacity-30">이전</button>
-          <button onClick={onNext} disabled={step === total} className="flex-[2] py-3 rounded-xl text-sm font-semibold text-white disabled:opacity-30" style={{ backgroundColor: step === total ? '#d1d5db' : COLOR }}>
+          <button onClick={onNext} className="flex-[2] py-3 rounded-xl text-sm font-semibold text-white" style={{ backgroundColor: COLOR }}>
             {step === total ? '완료 🎉' : '다음 단계'}
           </button>
         </div>
@@ -223,18 +223,24 @@ export default function SaleGuide() {
   }
 
   const handleNext = () => {
+    if (step === TOTAL) {
+      localStorage.setItem('sale_step', 1)
+      if (isLoggedIn) updateGuideStep('SALE', 1).catch(() => {})
+      navigate('/')
+      return
+    }
     const keys = STEP_ITEMS[step] || []
     const unchecked = keys.filter(k => !checks[k])
     if (unchecked.length > 0) {
       setPendingNext(() => () => {
-        const n = Math.min(TOTAL, step + 1)
+        const n = step + 1
         setStep(n)
         localStorage.setItem('sale_step', n)
         if (isLoggedIn) updateGuideStep('SALE', n).catch(() => {})
       })
       setShowWarning(true)
     } else {
-      const n = Math.min(TOTAL, step + 1)
+      const n = step + 1
       setStep(n)
       localStorage.setItem('sale_step', n)
       if (isLoggedIn) updateGuideStep('SALE', n).catch(() => {})
