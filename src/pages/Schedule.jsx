@@ -7,6 +7,15 @@ import Toast from '../components/Toast'
 import { getContracts, createContract, updateContract, deleteContract } from '../api/contract'
 
 const TYPE_LABEL = { MONTHLY: '월세', JEONSE: '전세', SALE: '매매' }
+
+function openAddressSearch(onSelect) {
+  new window.daum.Postcode({
+    oncomplete: (data) => {
+      const address = data.roadAddress || data.jibunAddress
+      onSelect(address)
+    },
+  }).open()
+}
 const TYPE_COLOR = { MONTHLY: '#BA7517', JEONSE: '#185FA5', SALE: '#534AB7' }
 const TYPE_BG    = { MONTHLY: '#FAEEDA', JEONSE: '#E6F1FB', SALE: '#EEEDFE' }
 
@@ -138,12 +147,23 @@ function ContractForm({ initial, onSave, onCancel }) {
 
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1">주소</label>
-          <input
-            value={form.address}
-            onChange={e => set('address', e.target.value)}
-            placeholder="예) 서울시 마포구 연남동 123-4"
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#185FA5]"
-          />
+          <div className="flex gap-2">
+            <input
+              value={form.address}
+              onChange={e => set('address', e.target.value)}
+              placeholder="주소 검색 버튼을 눌러주세요"
+              readOnly
+              className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#185FA5] bg-gray-50 cursor-pointer"
+              onClick={() => openAddressSearch(v => set('address', v))}
+            />
+            <button
+              type="button"
+              onClick={() => openAddressSearch(v => set('address', v))}
+              className="px-3 py-2.5 rounded-xl text-sm font-semibold border border-[#185FA5] text-[#185FA5] flex-shrink-0"
+            >
+              🔍 검색
+            </button>
+          </div>
         </div>
 
         {[
