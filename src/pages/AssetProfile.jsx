@@ -300,6 +300,17 @@ export default function AssetProfile() {
                   </div>
                 )}
 
+                {/* 소득 높아서 정책금융 없을 때 안내 */}
+                {result.products.every(p => p.name === '일반 주택담보대출' || p.name === 'HUG 전세보증보험') && (
+                  <div className="bg-[#FAEEDA] border border-[#E8C88A] rounded-xl px-4 py-3">
+                    <p className="text-xs font-semibold text-[#633806] mb-1">💡 정책금융 상품 해당 없음</p>
+                    <p className="text-xs text-[#633806]/80 leading-relaxed">
+                      연소득 기준 초과로 버팀목·디딤돌 등 정책금융 대출 신청이 어려워요.<br/>
+                      일반 시중은행 대출을 알아보시거나 <b>은행 상담</b>을 받아보세요.
+                    </p>
+                  </div>
+                )}
+
                 {/* 추천 상품 */}
                 {result.products.map((p, i) => (
                   <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4"
