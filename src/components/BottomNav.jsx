@@ -90,11 +90,9 @@ function HomeIcon({ home }) {
 function LoanIcon({ active }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9"
+      <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
         stroke={active ? '#185FA5' : '#9ca3af'} strokeWidth="1.8"
-        fill={active ? '#E6F1FB' : 'none'}/>
-      <path d="M12 7v10M9 9.5C9 8.1 10.3 7 12 7s3 1.1 3 2.5-1.3 2.5-3 2.5-3 1.1-3 2.5S10.3 17 12 17s3-1.1 3-2.5"
-        stroke={active ? '#185FA5' : '#9ca3af'} strokeWidth="1.8" strokeLinecap="round"/>
+        fill={active ? '#E6F1FB' : 'none'} strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }

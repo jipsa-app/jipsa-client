@@ -205,8 +205,35 @@ export default function Home() {
         ))}
       </div>
 
+      {/* 빠른 메뉴 */}
+      <div className="px-4 pt-4 pb-2">
+        <p className="text-xs font-semibold text-gray-400 px-1 mb-2">빠른 메뉴</p>
+        <div className="flex gap-2">
+          <button
+            onClick={() => navigate('/documents')}
+            className="flex-1 flex items-center gap-2 bg-white border border-gray-100 rounded-2xl px-3 py-3 shadow-sm"
+          >
+            <span className="text-lg">📄</span>
+            <div className="text-left">
+              <p className="text-xs font-semibold text-gray-700">서류 미리보기</p>
+              <p className="text-[10px] text-gray-400">등기부·계약서·건축물대장</p>
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/checklist')}
+            className="flex-1 flex items-center gap-2 bg-white border border-gray-100 rounded-2xl px-3 py-3 shadow-sm"
+          >
+            <span className="text-lg">🛡️</span>
+            <div className="text-left">
+              <p className="text-xs font-semibold text-gray-700">전세사기 예방</p>
+              <p className="text-[10px] text-gray-400">계약 전 6가지 확인</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
       {/* 하단 여백 */}
-      <div className="pb-6" />
+      <div className="pb-4" />
       <BottomNav />
     </div>
   )

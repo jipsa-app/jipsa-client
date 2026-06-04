@@ -76,23 +76,6 @@ export default function MyPage() {
         <div className="space-y-2">
           <p className="text-xs font-semibold text-gray-400 px-1 tracking-wide">준비 중인 기능 🚧</p>
           <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
-            <button
-              onClick={() => navigate('/mypage/assets')}
-              className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-gray-50 transition-colors rounded-t-2xl"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-[#E6F1FB] flex items-center justify-center text-lg flex-shrink-0">
-                  💰
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-medium text-gray-800">맞춤 대출 추천</p>
-                  <p className="text-xs text-gray-400 mt-0.5">내 자산 정보로 대출 상품 추천</p>
-                </div>
-              </div>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M5 3l4 4-4 4" stroke="#d1d5db" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
             <ComingSoon icon="🔔" label="D-day 이메일 알림" desc="계약 만료일 전 이메일로 알림" />
             <ComingSoon icon="✏️" label="이메일 인증" desc="회원가입 시 이메일 본인 인증" />
           </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import BottomNav from '../components/BottomNav'
 
 // 대출 상품 추천 로직
 function getRecommendations({ type, cash, targetPrice, income }) {
@@ -138,8 +139,8 @@ export default function AssetProfile() {
   const needAmount = Number(targetPrice) - Number(cash)
 
   return (
-    <div className="mx-auto max-w-mobile min-h-screen bg-gray-50 pb-10">
-      <Header title="맞춤 대출 추천" />
+    <div className="mx-auto max-w-mobile min-h-screen bg-gray-50 pb-24">
+      <Header title="맞춤 대출 추천" noBack />
 
       <div className="px-4 py-5 space-y-4">
 
@@ -272,6 +273,7 @@ export default function AssetProfile() {
           </div>
         )}
       </div>
+      <BottomNav />
     </div>
   )
 }
