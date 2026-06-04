@@ -90,6 +90,10 @@ export default function Checklist() {
   }, [])
 
   const toggle = async (id) => {
+    const isChecked = !!checked[id]
+    // 이미 체크된 항목보다 더 많이 체크 못 하도록 제한
+    if (!isChecked && count >= items.length) return
+
     if (isLoggedIn) {
       try {
         await toggleChecklistItem(id)
@@ -99,6 +103,20 @@ export default function Checklist() {
       }
     }
     setChecked((c) => ({ ...c, [id]: !c[id] }))
+  }
+
+  const reset = async () => {
+    if (isLoggedIn) {
+      try {
+        // 체크된 항목 전부 토글 해제
+        const checkedIds = Object.keys(checked).filter(id => checked[id])
+        await Promise.all(checkedIds.map(id => toggleChecklistItem(id)))
+      } catch {
+        setToast('초기화에 실패했어요. 다시 시도해주세요')
+        return
+      }
+    }
+    setChecked({})
   }
 
   const count = Object.values(checked).filter(Boolean).length
@@ -215,9 +233,19 @@ export default function Checklist() {
       <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-3">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-semibold text-gray-700">{count} / {items.length} 완료</span>
-          <span className="text-sm font-bold" style={{ color: allDone ? '#639922' : '#E24B4A' }}>
-            {allDone ? '모두 완료 🎉' : `${items.length - count}개 남음`}
-          </span>
+          <div className="flex items-center gap-2">
+            {count > 0 && (
+              <button
+                onClick={reset}
+                className="text-xs text-gray-400 underline"
+              >
+                초기화
+              </button>
+            )}
+            <span className="text-sm font-bold" style={{ color: allDone ? '#639922' : '#E24B4A' }}>
+              {allDone ? '모두 완료 🎉' : `${items.length - count}개 남음`}
+            </span>
+          </div>
         </div>
         <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
           <div
