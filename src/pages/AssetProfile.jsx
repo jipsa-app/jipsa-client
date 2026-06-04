@@ -23,6 +23,8 @@ function getRecommendations({ type, cash, targetPrice, income }) {
         rate,
         desc: `연소득 ${income <= 5000 ? '5천만원' : '6천만원'} 이하 · 최대 ${limit.toLocaleString()}만원`,
         tip: need > limit ? `⚠️ 한도(${limit.toLocaleString()}만원) 초과 — 추가 자금 준비 필요` : '✅ 조건 충족!',
+        url: 'https://nhuf.molit.go.kr/FP/FP05/FP0503/FP05030101.jsp',
+        urlLabel: '주택도시기금 바로가기',
       })
     }
 
@@ -36,6 +38,8 @@ function getRecommendations({ type, cash, targetPrice, income }) {
       rate: 2.3,
       desc: '만 34세 이하 · 연소득 5천만원 이하 · 최대 3억',
       tip: income <= 5000 && need <= 30000 ? '✅ 조건 충족!' : '⚠️ 소득/나이 조건 확인 필요',
+      url: 'https://nhuf.molit.go.kr/FP/FP05/FP0503/FP05030201.jsp',
+      urlLabel: '청년 전세대출 신청',
     })
 
     // HUG 전세보증보험
@@ -48,6 +52,8 @@ function getRecommendations({ type, cash, targetPrice, income }) {
       rate: null,
       desc: '전세금 미반환 시 HUG가 대신 지급 · 연 보증금의 0.1~0.4%',
       tip: '✅ 전세 계약 시 필수 권장!',
+      url: 'https://www.khug.or.kr',
+      urlLabel: 'HUG 바로가기',
     })
   }
 
@@ -64,6 +70,8 @@ function getRecommendations({ type, cash, targetPrice, income }) {
         rate: 2.65,
         desc: '연소득 6천만원 이하 · 최대 3억 · 주택가격 5억 이하',
         tip: need <= didiLimit ? '✅ 조건 충족!' : `⚠️ 한도(${didiLimit.toLocaleString()}만원) 초과`,
+        url: 'https://nhuf.molit.go.kr/FP/FP05/FP0502/FP05020101.jsp',
+        urlLabel: '디딤돌 대출 신청',
       })
     }
 
@@ -79,6 +87,8 @@ function getRecommendations({ type, cash, targetPrice, income }) {
         rate: 3.8,
         desc: '연소득 7천만원 이하 · 최대 3.6억 · 고정금리',
         tip: need <= bogumlimit ? '✅ 조건 충족!' : `⚠️ 한도(${bogumlimit.toLocaleString()}만원) 초과`,
+        url: 'https://www.hf.go.kr/hf/sub01/sub01_01_01.do',
+        urlLabel: '한국주택금융공사 바로가기',
       })
     }
 
@@ -92,6 +102,8 @@ function getRecommendations({ type, cash, targetPrice, income }) {
       rate: 4.5,
       desc: '소득 제한 없음 · LTV 40~70% · 스트레스 DSR 3단계 적용',
       tip: '⚠️ 스트레스 DSR 3단계 (금리 1.5% 가산) 적용 — 은행 상담 필수',
+      url: 'https://www.fss.or.kr/fss/main/main.do',
+      urlLabel: '금융감독원 대출 비교',
     })
   }
 
@@ -234,7 +246,21 @@ export default function AssetProfile() {
                       )}
                     </div>
                     <p className="text-xs text-gray-500 mb-2">{p.desc}</p>
-                    <p className="text-xs font-medium" style={{ color: p.color }}>{p.tip}</p>
+                    <p className="text-xs font-medium mb-3" style={{ color: p.color }}>{p.tip}</p>
+                    {p.url && (
+                      <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-xs font-semibold transition-colors"
+                        style={{ backgroundColor: p.bg, color: p.color }}
+                      >
+                        <span>{p.urlLabel}</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 ))}
 
