@@ -191,50 +191,8 @@ export default function Home() {
         ))}
       </div>
 
-      {/* 하단 배너 */}
-      <div className="px-4 pb-8 pt-4 space-y-3 mt-4">
-        <button
-          onClick={() => navigate('/checklist')}
-          className="w-full flex items-center gap-3 bg-[#FCEBEB] border border-[#F5BABA] rounded-xl px-4 py-3.5 active:scale-[0.98] transition-transform"
-        >
-          <span className="text-xl">🛡️</span>
-          <div className="flex-1 text-left">
-            <p className="font-semibold text-[#791F1F] text-sm">전세사기 예방 체크리스트</p>
-            <p className="text-xs text-[#791F1F]/70 mt-0.5">계약 전 6가지 필수 확인 항목</p>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 3.5L10.5 8L6 12.5" stroke="#E24B4A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-
-        <button
-          onClick={() => navigate('/documents')}
-          className="w-full flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 active:scale-[0.98] transition-transform"
-        >
-          <span className="text-xl">📄</span>
-          <div className="flex-1 text-left">
-            <p className="font-semibold text-gray-800 text-sm">서류 미리보기</p>
-            <p className="text-xs text-gray-400 mt-0.5">등기부등본·계약서·건축물대장 보는 법</p>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 3.5L10.5 8L6 12.5" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-
-        <button
-          onClick={() => navigate('/schedule')}
-          className="w-full flex items-center gap-3 bg-[#E6F1FB] border border-[#A8C8E8] rounded-xl px-4 py-3.5 active:scale-[0.98] transition-transform"
-        >
-          <span className="text-xl">📅</span>
-          <div className="flex-1 text-left">
-            <p className="font-semibold text-[#0C447C] text-sm">계약 일정 관리</p>
-            <p className="text-xs text-[#0C447C]/70 mt-0.5">잔금일·전입신고 D-day 자동 계산</p>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 3.5L10.5 8L6 12.5" stroke="#185FA5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
+      {/* 하단 여백 */}
+      <div className="pb-6" />
       <BottomNav />
     </div>
   )

@@ -16,14 +16,6 @@ export default function BottomNav() {
 
   const tabs = [
     {
-      key: 'home',
-      label: '홈',
-      icon: HomeIcon,
-      path: '/',
-      active: isActive('/'),
-      onClick: () => navigate('/'),
-    },
-    {
       key: 'guide',
       label: '가이드',
       icon: GuideIcon,
@@ -39,6 +31,14 @@ export default function BottomNav() {
       onClick: () => navigate('/checklist'),
     },
     {
+      key: 'home',
+      label: '홈',
+      icon: HomeIcon,
+      path: '/',
+      active: isActive('/'),
+      onClick: () => navigate('/'),
+    },
+    {
       key: 'schedule',
       label: '일정',
       icon: CalendarIcon,
@@ -48,7 +48,7 @@ export default function BottomNav() {
     },
     {
       key: 'mypage',
-      label: '마이페이지',
+      label: '마이',
       icon: UserIcon,
       path: '/mypage',
       active: isActive('/mypage'),
@@ -88,15 +88,21 @@ export default function BottomNav() {
             <button
               key={tab.key}
               onClick={tab.onClick}
-              className="flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-all"
+              className={`flex flex-col items-center gap-0.5 transition-all ${
+                tab.key === 'home'
+                  ? '-mt-4 bg-[#185FA5] w-14 h-14 rounded-full shadow-lg items-center justify-center'
+                  : 'px-3 py-1 rounded-xl'
+              }`}
             >
-              <tab.icon active={tab.active} />
-              <span
-                className="text-[10px] font-medium"
-                style={{ color: tab.active ? '#185FA5' : '#9ca3af' }}
-              >
-                {tab.label}
-              </span>
+              <tab.icon active={tab.active} home={tab.key === 'home'} />
+              {tab.key !== 'home' && (
+                <span
+                  className="text-[10px] font-medium"
+                  style={{ color: tab.active ? '#185FA5' : '#9ca3af' }}
+                >
+                  {tab.label}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -105,13 +111,13 @@ export default function BottomNav() {
   )
 }
 
-function HomeIcon({ active }) {
+function HomeIcon({ home }) {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path d="M3 9.5L12 3L21 9.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"
-        stroke={active ? '#185FA5' : '#9ca3af'} strokeWidth="1.8"
-        fill={active ? '#E6F1FB' : 'none'} strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M9 21V12h6v9" stroke={active ? '#185FA5' : '#9ca3af'} strokeWidth="1.8" strokeLinecap="round"/>
+        stroke="white" strokeWidth="1.8"
+        fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M9 21V12h6v9" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
     </svg>
   )
 }
