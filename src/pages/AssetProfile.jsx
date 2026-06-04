@@ -139,12 +139,14 @@ export default function AssetProfile() {
   const [targetPrice, setTargetPrice] = useState(saved.targetPrice || '')
   const [result, setResult] = useState(saved.result || null)
   const [memberAge, setMemberAge] = useState(null) // DB에서 불러온 나이
+  const [ageLoaded, setAgeLoaded] = useState(!isLoggedIn) // 비로그인이면 바로 true
 
   // 로그인 시 DB에서 나이 불러오기 (자산 정보는 localStorage 우선)
   useEffect(() => {
     if (!isLoggedIn) return
     getMe().then(res => {
       if (res.data.age) setMemberAge(res.data.age)
+      setAgeLoaded(true)
       // localStorage에 데이터가 없을 때만 DB에서 불러오기
       const hasLocal = localStorage.getItem('asset_profile')
       if (!hasLocal && res.data.assetProfile) {
@@ -248,7 +250,7 @@ export default function AssetProfile() {
           </div>
         </div>
 
-        {isLoggedIn && !memberAge && (
+        {isLoggedIn && ageLoaded && !memberAge && (
           <div className="bg-[#FAEEDA] border border-[#E8C88A] rounded-xl px-4 py-3 flex items-center gap-2">
             <span className="text-sm">💡</span>
             <p className="text-xs text-[#633806] flex-1">
