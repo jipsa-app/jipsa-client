@@ -234,11 +234,24 @@ export default function JeonseGuide() {
           </p>
         </div>
 
+        <div className="rounded-xl border p-4 space-y-2" style={{ backgroundColor: BG, borderColor: BORDER }}>
+          <div className="flex items-center gap-2">
+            <span>💰</span>
+            <span className="font-semibold text-sm" style={{ color: TEXT }}>중개수수료 계산법</span>
+          </div>
+          <p className="text-sm leading-relaxed" style={{ color: TEXT + 'CC' }}>
+            <b>수수료율</b>: 1억~6억 0.3% / 6억 초과 0.4%<br/>
+            예) 전세 2억 → 수수료 0.3% = <b>최대 60만원</b><br/>
+            네이버 부동산 수수료 계산기 활용 추천
+          </p>
+        </div>
+
         <div className="space-y-2">
           <p className="text-xs text-gray-500 font-medium px-1">매물 탐색 사이트</p>
           <LinkRow href="https://land.naver.com">네이버 부동산</LinkRow>
           <LinkRow href="https://zigbang.com">직방</LinkRow>
           <LinkRow href="https://kbland.kr">KB부동산</LinkRow>
+          <LinkRow href="https://www.peterpanz.com">피터팬의 좋은방 구하기</LinkRow>
         </div>
       </div>
     ),
@@ -260,6 +273,12 @@ export default function JeonseGuide() {
           </CheckItem>
           <CheckItem checked={!!checks['2e']} onChange={() => toggle('2e')} color={COLOR}>
             관리비 항목·금액 확인 (인터넷·주차·청소 포함 여부)
+          </CheckItem>
+          <CheckItem checked={!!checks['2f']} onChange={() => toggle('2f')} color={COLOR}>
+            냄새 확인 (곰팡이·담배·하수구 냄새)
+          </CheckItem>
+          <CheckItem checked={!!checks['2g']} onChange={() => toggle('2g')} color={COLOR}>
+            CCTV 위치 및 작동 여부 확인
           </CheckItem>
         </div>
         <WarningBanner>
@@ -401,7 +420,7 @@ export default function JeonseGuide() {
             {[
               { title: '전입신고', desc: '주민센터 or 정부24 · 무료' },
               { title: '확정일자', desc: '주민센터 · 600원' },
-              { title: '전월세 신고', desc: '계약 후 30일 이내 · 미신고 과태료 최대 30만원 (허위신고 100만원)' },
+              { title: '전월세 신고', desc: '보증금 6천만원 초과 or 월세 30만원 초과 시 의무 · 30일 이내 · 미신고 과태료 최대 30만원' },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-3 text-sm">
                 <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ backgroundColor: COLOR }}>
@@ -435,6 +454,21 @@ export default function JeonseGuide() {
           <LinkRow href="https://www.khug.or.kr">HUG 주택도시보증공사</LinkRow>
           <LinkRow href="https://www.hf.go.kr">HF 한국주택금융공사</LinkRow>
           <LinkRow href="https://www.sgic.co.kr">SGI 서울보증</LinkRow>
+        </div>
+
+        <div className="rounded-xl border p-4 space-y-2" style={{ backgroundColor: BG, borderColor: BORDER }}>
+          <div className="flex items-center gap-2">
+            <span>🛡️</span>
+            <span className="font-semibold text-sm" style={{ color: TEXT }}>최우선변제권 — 소액임차인 보호</span>
+          </div>
+          <p className="text-sm leading-relaxed" style={{ color: TEXT + 'CC' }}>
+            확정일자 없이도 경매 시 일부 보증금을 최우선으로 돌려받을 수 있어요.<br/><br/>
+            <b>2026년 기준 소액임차인 범위</b><br/>
+            • 서울: 보증금 <b>1억 6,500만원 이하</b><br/>
+            • 과밀억제권역(경기 일부): 1억 4,500만원 이하<br/>
+            • 광역시: 8,500만원 이하<br/>
+            • 그 외 지역: 7,500만원 이하
+          </p>
         </div>
 
         <div className="bg-[#EAF3DE] border border-[#B0D48A] rounded-xl p-5 text-center mt-2">

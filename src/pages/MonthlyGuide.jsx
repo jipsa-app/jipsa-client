@@ -261,11 +261,18 @@ export default function MonthlyGuide() {
           (출처: 국토부 실거래가 기준)
         </InfoCard>
 
+        <InfoCard color="#BA7517" bg="#FAEEDA" border="#E8C88A" icon="💰" title="중개수수료 계산법">
+          거래금액 = 보증금 + (월세 × 100)<br/>
+          예) 보증금 1천만 + 월세 50만 = <b>6천만원 → 수수료 0.4% = 최대 24만원</b><br/><br/>
+          <b>수수료율</b>: 5천만 미만 0.5% / 5천만~1억 0.4% / 1억~6억 0.3%
+        </InfoCard>
+
         <div className="space-y-2">
           <p className="text-xs text-gray-500 font-medium px-1">매물 탐색 사이트</p>
           <LinkRow href="https://land.naver.com">네이버 부동산</LinkRow>
           <LinkRow href="https://zigbang.com">직방</LinkRow>
           <LinkRow href="https://dabangapp.com">다방</LinkRow>
+          <LinkRow href="https://www.peterpanz.com">피터팬의 좋은방 구하기</LinkRow>
         </div>
 
         <button
@@ -296,6 +303,12 @@ export default function MonthlyGuide() {
           </CheckItem>
           <CheckItem checked={!!checks['2e']} onChange={() => toggle('2e')} color={COLOR}>
             난방 방식 확인 (개별난방 권장)
+          </CheckItem>
+          <CheckItem checked={!!checks['2f']} onChange={() => toggle('2f')} color={COLOR}>
+            냄새 확인 (곰팡이·담배·하수구 냄새)
+          </CheckItem>
+          <CheckItem checked={!!checks['2g']} onChange={() => toggle('2g')} color={COLOR}>
+            CCTV 위치 및 작동 여부 확인
           </CheckItem>
         </div>
 
@@ -407,7 +420,7 @@ export default function MonthlyGuide() {
         <CompleteCard items={[
           { title: '전입신고', desc: '주민센터 or 정부24 · 무료 · 이사 당일 처리' },
           { title: '확정일자', desc: '주민센터 · 600원 · 전입신고 시 함께 신청' },
-          { title: '전월세 신고', desc: '계약 후 30일 이내 · 미신고 시 과태료 최대 30만원 (허위신고 100만원)' },
+          { title: '전월세 신고', desc: '보증금 6천만원 초과 or 월세 30만원 초과 시 의무 · 30일 이내 · 미신고 과태료 최대 30만원' },
           { title: '자동차 주소 변경', desc: '관할 구청 또는 차량등록사업소' },
         ]} />
 
