@@ -39,7 +39,7 @@ export default function BottomNav() {
       key: 'mypage',
       label: '마이',
       icon: UserIcon,
-      active: isActive('/mypage'),
+      active: pathname.startsWith('/mypage'),
       onClick: () => navigate('/mypage'),
     },
   ]
