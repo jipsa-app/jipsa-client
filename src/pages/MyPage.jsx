@@ -77,7 +77,7 @@ export default function MyPage() {
         <div className="space-y-2">
           <p className="text-xs font-semibold text-gray-400 px-1 tracking-wide">앱 정보</p>
           <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
-            <InfoRow label="버전" value="v1.0.0" />
+            <InfoRow label="버전" value="v2.0.0" />
             <InfoRow label="문의" value="syysia2787@gmail.com" />
           </div>
         </div>
