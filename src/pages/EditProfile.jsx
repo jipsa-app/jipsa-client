@@ -124,14 +124,14 @@ export default function EditProfile() {
         </Section>
 
         {/* 회원 탈퇴 */}
-        <Section title="계정 관리">
+        <div className="flex justify-center pt-2">
           <button
             onClick={() => setShowWithdraw(true)}
-            className="w-full py-3.5 rounded-xl text-sm font-medium text-red-400 border border-red-200 bg-white hover:bg-red-50 transition-colors"
+            className="text-xs text-gray-300 underline underline-offset-2"
           >
             회원 탈퇴
           </button>
-        </Section>
+        </div>
       </div>
 
       {/* 회원 탈퇴 확인 모달 */}
