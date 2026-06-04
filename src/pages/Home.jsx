@@ -87,10 +87,12 @@ export default function Home() {
   function handleLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('nickname')
+    localStorage.removeItem('email')
     localStorage.removeItem('monthly_step')
     localStorage.removeItem('jeonse_step')
     localStorage.removeItem('sale_step')
     localStorage.removeItem('urgent_schedule')
+    localStorage.removeItem('asset_profile')
     setNickname(null)
     setUrgentSchedule(null)
   }

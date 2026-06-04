@@ -11,19 +11,13 @@ export default function MyPage() {
   function handleLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('nickname')
+    localStorage.removeItem('email')
     localStorage.removeItem('monthly_step')
     localStorage.removeItem('jeonse_step')
     localStorage.removeItem('sale_step')
     localStorage.removeItem('urgent_schedule')
-    localStorage.removeItem('email')
+    localStorage.removeItem('asset_profile')
     navigate('/')
-  }
-
-  function handleSaveNickname() {
-    if (!inputNick.trim()) return
-    localStorage.setItem('nickname', inputNick.trim())
-    setNickname(inputNick.trim())
-    setEditMode(false)
   }
 
   return (
