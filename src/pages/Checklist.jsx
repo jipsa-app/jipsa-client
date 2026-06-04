@@ -92,8 +92,9 @@ export default function Checklist() {
 
   const toggle = async (id) => {
     const isChecked = !!checked[id]
-    // 이미 체크된 항목보다 더 많이 체크 못 하도록 제한
-    if (!isChecked && count >= items.length) return
+    // 체크리스트 항목 수 초과 방지 (가이드 항목 제외한 count 기준)
+    const currentCount = items.filter(item => !!checked[item.id]).length
+    if (!isChecked && currentCount >= items.length) return
 
     if (isLoggedIn) {
       try {
@@ -109,18 +110,24 @@ export default function Checklist() {
   const reset = async () => {
     if (isLoggedIn) {
       try {
-        // 체크된 항목 전부 토글 해제
-        const checkedIds = Object.keys(checked).filter(id => checked[id])
+        // 체크리스트 항목 ID만 토글 해제 (가이드 항목 제외)
+        const itemIds = items.map(item => item.id)
+        const checkedIds = itemIds.filter(id => checked[id])
         await Promise.all(checkedIds.map(id => toggleChecklistItem(id)))
       } catch {
         setToast('초기화에 실패했어요. 다시 시도해주세요')
         return
       }
     }
-    setChecked({})
+    setChecked(c => {
+      const next = { ...c }
+      items.forEach(item => { next[item.id] = false })
+      return next
+    })
   }
 
-  const count = Object.values(checked).filter(Boolean).length
+  // 가이드 체크 항목 제외하고 체크리스트 항목만 카운트
+  const count = items.filter(item => !!checked[item.id]).length
   const allDone = count === items.length
 
   if (loading) return (
