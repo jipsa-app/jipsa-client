@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
+import SplashScreen from './components/SplashScreen'
 import Home from './pages/Home'
 import MonthlyGuide from './pages/MonthlyGuide'
 import JeonseGuide from './pages/JeonseGuide'
@@ -14,8 +16,11 @@ import AssetProfile from './pages/AssetProfile'
 import NotFound from './pages/NotFound'
 
 export default function App() {
+  const [splashDone, setSplashDone] = useState(false)
+
   return (
     <div className="bg-gray-50 min-h-screen">
+      {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/monthly" element={<MonthlyGuide />} />
