@@ -73,4 +73,4 @@ npm run dev
 ## 🔗 배포
 
 - Frontend: Vercel
-- 배포 URL: (배포 후 추가 예정)
+- 배포 URL: https://jipsa-client.vercel.app
